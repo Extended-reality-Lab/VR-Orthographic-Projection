@@ -1,0 +1,158 @@
+// v_new = new HashSet<Vector3>(v);
+        // Dictionary<Vector3, HashSet<Vector3>> n_map = new Dictionary<Vector3, HashSet<Vector3>>();
+        // foreach (Vector3 vert in v_new) {
+        //     HashSet<Vector3> n = new HashSet<Vector3>();
+        //     int i = 0;
+        //     foreach (int pos in t) {
+        //         if (v[pos] == vert)
+        //         {
+        //             switch (i % 3)
+        //             {
+        //                 case 0:
+        //                     n.Add(v[t[i + 1]]);
+        //                     n.Add(v[t[i + 2]]);
+        //                     break;
+        //                 case 1:
+        //                     n.Add(v[t[i - 1]]);
+        //                     n.Add(v[t[i + 1]]);
+        //                     break;
+        //                 case 2:
+        //                     n.Add(v[t[i - 1]]);
+        //                     n.Add(v[t[i - 2]]);
+        //                     break;
+        //                 default:
+        //                     break;
+        //             }
+        //         }
+        //         i++;
+        //     }
+        //     n_map.Add(vert, n);
+        // }
+        // Dictionary<Vector3, bool> to_remove = new Dictionary<Vector3, bool>();
+        // HashSet<Vector3> final = new HashSet<Vector3>();
+        // foreach (Vector3 vert in v_new) {
+        //     bool remove = false;
+        //     HashSet<Vector3> n = n_map[vert];
+        //     foreach (Vector3 v1 in n) {
+        //         foreach (Vector3 v2 in n)
+        //         {
+        //             if (v1 != v2 && v1 != vert && v2 != vert) {
+                        
+        //                 if (Vector3.Distance(v1, vert) + Vector3.Distance(vert, v2) == Vector3.Distance(v1,v2)) {
+
+        //                     HashSet<Vector3> n2 = n_map[v1];
+        //                     HashSet<Vector3> n3 = n_map[v2];
+        //                     List<Vector3> tri1 = new List<Vector3>();
+        //                     List<Vector3> tri2 = new List<Vector3>();
+        //                     List<Vector3> tri3 = new List<Vector3>();
+        //                     List<Vector3> tri4 = new List<Vector3>();
+        //                     int t_count = 0;
+        //                     foreach (Vector3 v3 in n2)
+        //                     {
+        //                         if (n.Contains(v3)) {
+        //                             // Debug.Log("HIT");
+        //                             if (t_count == 0) {
+        //                                 tri1.Add(vert);
+        //                                 tri1.Add(v1);
+        //                                 tri1.Add(v3);
+        //                                 t_count++;
+        //                             }
+        //                             else {
+        //                                 tri2.Add(vert);
+        //                                 tri2.Add(v1);
+        //                                 tri2.Add(v3);
+        //                                 break;
+        //                             }
+        //                         }
+        //                     }
+        //                     t_count = 0;
+        //                     foreach (Vector3 v3 in n3)
+        //                     {
+        //                         if (n.Contains(v3)) {
+        //                             // Debug.Log("HIT");
+        //                             if (t_count == 0) {
+        //                                 tri3.Add(vert);
+        //                                 tri3.Add(v2);
+        //                                 tri3.Add(v3);
+        //                                 t_count++;
+        //                             }
+        //                             else {
+        //                                 tri4.Add(vert);
+        //                                 tri4.Add(v2);
+        //                                 tri4.Add(v3);
+        //                                 break;
+        //                             }
+        //                         }
+        //                     }
+        //                     // Debug.Log(tri1);
+        //                     // Debug.Log(tri2);
+        //                     //check two triangles
+        //                     Vector3 C1 = (tri1[0]+tri1[1]+tri1[2]) / 3;  // center triangle 1
+        //                     Vector3 C2 = (tri2[0]+tri2[1]+tri2[2]) / 3;  // center triangle 2
+                            
+        //                     Vector3 N1 = Vector3.Cross(tri1[1] - tri1[0], tri1[2] - tri1[0]);  // normal of triangle 1
+        //                     Vector3 D = C2 - C1;  // vector from triangle1 center to triangle2 center
+
+        //                     Vector3 C3 = (tri3[0]+tri3[1]+tri3[2]) / 3;  // center triangle 1
+        //                     Vector3 C4 = (tri4[0]+tri4[1]+tri4[2]) / 3;  // center triangle 2
+                            
+        //                     Vector3 N2 = Vector3.Cross(tri3[1] - tri3[0], tri3[2] - tri3[0]);  // normal of triangle 1
+        //                     Vector3 D2 = C4 - C3;  // vector from triangle1 center to triangle2 center
+        //                     // Debug.Log("Checking Triangle Angle");
+
+        //                     if (Vector3.Distance(tri1[2],tri2[2]) == 0 || Vector3.Distance(tri3[2],tri4[2]) == 0)  {
+        //                         remove = true;
+        //                     }
+        //                     if ((Vector3.Dot(N1, D) == 0 && Vector3.Dot(N2, D2) == 0) || (Vector3.Dot(N1, D) != 0 && Vector3.Dot(N2, D2) != 0)) {
+        //                         // Debug.Log("adding: " + vert + ", " + v1);
+        //                         remove = true;
+        //                         // final.Add(vert);
+        //                         // final.Add(v1);
+        //                     }
+        //                 }
+        //             }
+        //         }
+
+        //     }
+        //     if (!remove)
+        //     {
+        //         final.Add(vert);
+        //     }
+        // }
+
+        // foreach (Vector3 vert in v_new)
+        // {
+        //     Debug.Log(vert);
+        //     HashSet<Vector3> n = n_map[vert];
+        //     List<Vector3> plane_count = new List<Vector3>();
+        //     foreach (Vector3 v1 in n)
+        //     {
+        //         HashSet<Vector3> n2 = n_map[v1];
+        //         foreach (Vector3 v2 in n2)
+        //         {
+        //             if (n.Contains(v2))
+        //             { 
+                    
+        //                 Vector3 N1 = Vector3.Cross(v1 - vert, v2 - vert);  // normal of triangle
+        //                 // Debug.Log(N1);
+        //                 bool can_add = true;
+        //                 foreach (Vector3 n1 in plane_count)
+        //                 {
+        //                     if (Vector3.Cross(N1, n1) == Vector3.zero) {
+        //                         can_add = false;
+        //                     }
+        //                 }
+        //                 if (can_add)
+        //                 {
+        //                     Debug.Log(N1);
+        //                     plane_count.Add(N1);
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     if (plane_count.Count >= 3)
+        //     {
+        //         // Debug.Log(plane_count.Count);
+        //         final.Add(vert);
+        //     }
+        // }
