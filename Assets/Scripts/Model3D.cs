@@ -99,7 +99,11 @@ public class Model3D : MonoBehaviour
                 final.Add(vert);
             }
         }
-        
+        /*
+        * reads in mesh, only keep the vertex we want, 
+        * add MyVertex script yo them, 
+        * and add attribute to them and the mash.
+        */
         foreach (var vert in final) {
             GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             GameObject myVert = GameObject.Instantiate(temp, gameObject.transform);

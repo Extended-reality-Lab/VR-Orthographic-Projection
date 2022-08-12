@@ -11,7 +11,7 @@ public class TabButton : MonoBehaviour{
     public TabGroup tabGroup;
 
     public UnityEvent onTabSelected;
-    public UnityEvent onTabDeselected;
+    public UnityEvent  onTabDeselected;
 
     void Start() {
         tabGroup.Subscribe(this);
@@ -19,6 +19,14 @@ public class TabButton : MonoBehaviour{
 
     public void OnPointerClick() {
         tabGroup.OnTabSelected(this);
+    }
+
+    public void NextPageClick() {
+        tabGroup.NextPageSelected(this);
+    }
+
+    public void PrevPageClick() {
+        tabGroup.PrevPageSelected(this);
     }
 
     public void Select() {
