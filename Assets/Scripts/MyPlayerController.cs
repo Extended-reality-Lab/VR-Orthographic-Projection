@@ -135,16 +135,6 @@ public class MyPlayerController : MonoBehaviour
                 lrs.endWidth = .01f;              
             }
 
-            
-            lr.material = dotted_line;
-            lr.textureMode = LineTextureMode.Tile;
-            lr.startWidth = 0.01f;
-            lr.endWidth = 0.01f;
-            float width =  lr.startWidth;
-            //lr.material.SetTextureScale("_MainTex", new Vector2(1.0f, 1.0f));
-            lr.material.mainTextureScale = new Vector2(1.0f/width, 1.0f);
-
-
             Vector3[] positions = new Vector3[2];
             lineStart = active_line.transform.position;
             positions[0] = lineStart;
@@ -213,7 +203,7 @@ public class MyPlayerController : MonoBehaviour
                     else if (parent_wall) {
                         lr.tag = "w_line";
                     }
-                    //lr.positionCount = positions.Length;
+                    lr.positionCount = positions.Length;
                     lr.SetPositions(positions);
                     if(highlighted_vertex) {
                         if (dotted && highlighted_vertex.GetComponent<MyVertex>().GetWallManager() != null)
@@ -221,9 +211,8 @@ public class MyPlayerController : MonoBehaviour
                             Debug.Log("Drawing Dotted");
                             lr.material = dotted_line;
                             lr.textureMode = LineTextureMode.Tile;
-                            //float width =  lr.startWidth;
-                            //lr.material.SetTextureScale("_MainTex", new Vector2(1.0f, 1.0f));
-                            lr.material.mainTextureScale = new Vector2(0.01f, 0.01f);
+                            float width =  lr.startWidth;
+                            lr.material.SetTextureScale("_MainTex", new Vector2(0.5f/width, 1.0f));
                         }
                     }
                     if (active_line) {
@@ -346,11 +335,6 @@ public class MyPlayerController : MonoBehaviour
 
     }
 
-    /*
-    * t = controller dragging point, s = line start point
-    * 
-    * return the snapped point
-    */
     private Vector3 Snap(Vector3 t, Vector3 s) {
         float x_diff = Math.Abs(t.x - s.x);
         float y_diff = Math.Abs(t.y - s.y);
@@ -365,7 +349,7 @@ public class MyPlayerController : MonoBehaviour
         else if (x_diff > y_diff && x_diff > z_diff) {
             return new Vector3((float)Math.Round(t.x * 100f) /100f, (float)Math.Round(s.y * 100f) /100f, (float)Math.Round(s.z * 100f) /100f);
         }
-        return t; //base case
+        return t;
 
     }
 
@@ -373,14 +357,17 @@ public class MyPlayerController : MonoBehaviour
 
         WallManager parent_wall = chain[0].GetComponent<MyVertex>().GetWallManager();
         Model3D parent_model = chain[0].GetComponent<MyVertex>().GetModel();
-        Vector3[] pos = new Vector3[chain.Count + 1];
+        //Vector3[] pos = new Vector3[chain.Count + 1];
+        Vector3[] pos = new Vector3[chain.Count];
+        Debug.Log("Chain count: " + chain.Count);
         if (chain.Count == 1)
             return;
         for(int i = 0; i < chain.Count; i++)
         {
             pos[i] = chain[i].transform.position;
+            Debug.Log("Adding Vertex to pos: " + chain[i].transform.position);
         }
-        pos[chain.Count] = chain[0].transform.position;
+        //pos[chain.Count] = chain[0].transform.position;
         LineRenderer lr;
         GameObject go = new GameObject("LR holder");
         lr = go.gameObject.AddComponent<LineRenderer>();
@@ -405,6 +392,13 @@ public class MyPlayerController : MonoBehaviour
         lr.positionCount = pos.Length;
         Debug.Log("Positions: " + String.Join(", ", new List<Vector3>(pos).ConvertAll(pos => pos.ToString()).ToArray()));
         lr.SetPositions(pos);
+        if (dotted)
+            {
+                Debug.Log("Drawing Dotted");
+                lr.textureMode = LineTextureMode.Tile;
+                float width =  lr.startWidth;
+                lr.material.SetTextureScale("_MainTex", new Vector2(0.5f/width, 1.0f));
+            }
         foreach (GameObject item in chain)
         {
             item.GetComponent<MyVertex>().selected = false;

@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 98d8e2c2b42a91341b8b1b794a9baeea, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1590,6 +1590,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1714539936}
     m_Modifications:
+    - target: {fileID: 3025063385704075676, guid: 440641f98490a6945ab6b3d998c6f272, type: 3}
+      propertyPath: m_Text
+      value: Draw Dashed Lines
+      objectReference: {fileID: 0}
     - target: {fileID: 5239913481505593136, guid: 440641f98490a6945ab6b3d998c6f272, type: 3}
       propertyPath: m_Camera
       value: 
