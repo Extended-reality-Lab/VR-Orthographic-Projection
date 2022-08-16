@@ -20,6 +20,11 @@ public class WallManager : MonoBehaviour
     public List<GameObject> rendered_vertices = new List<GameObject>();
     // Update is called once per frame
 
+    /*
+    * When controller hit the wall:
+    * Turn on can_spawn_vertex, 
+    * Set spawn_point attributes on the collided wall with other.contacts[0].point, depth_axis and surface. 
+    */
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "GameController") {
             Debug.Log("Start Collision with controller");
@@ -43,6 +48,7 @@ public class WallManager : MonoBehaviour
         } 
     }
 
+    //Continue setting spawn_point
     void OnCollisionStay(Collision other) {
         if (other.gameObject.tag == "GameController") {
             spawn_point = other.contacts[0].point;
@@ -64,6 +70,7 @@ public class WallManager : MonoBehaviour
         } 
     }
 
+    //disable can_spawn_vertex when exit
     private void OnCollisionExit(Collision other) {
         if (other.gameObject.tag == "GameController") {
             Debug.Log("End Collision with controller");

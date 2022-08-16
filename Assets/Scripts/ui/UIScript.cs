@@ -13,7 +13,8 @@ public class UIScript : MonoBehaviour {
     public Toggle dotted;
 
     private bool isPressed;
-    private string[] modelenum = new string[] {"Default", "Steps"};
+    //two model options right now: default and steps
+    private string[] modelenum = new string[] {"Default", "Steps", "Steps1"};
 
 
     void Awake() {

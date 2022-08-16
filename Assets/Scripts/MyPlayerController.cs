@@ -211,7 +211,8 @@ public class MyPlayerController : MonoBehaviour
                             Debug.Log("Drawing Dotted");
                             lr.material = dotted_line;
                             lr.textureMode = LineTextureMode.Tile;
-                            lr.material.SetTextureScale("_MainTex", new Vector2(1.0f, 1.0f));
+                            float width =  lr.startWidth;
+                            lr.material.SetTextureScale("_MainTex", new Vector2(0.5f/width, 1.0f));
                         }
                     }
                     if (active_line) {
@@ -356,14 +357,17 @@ public class MyPlayerController : MonoBehaviour
 
         WallManager parent_wall = chain[0].GetComponent<MyVertex>().GetWallManager();
         Model3D parent_model = chain[0].GetComponent<MyVertex>().GetModel();
-        Vector3[] pos = new Vector3[chain.Count + 1];
+        //Vector3[] pos = new Vector3[chain.Count + 1];
+        Vector3[] pos = new Vector3[chain.Count];
+        Debug.Log("Chain count: " + chain.Count);
         if (chain.Count == 1)
             return;
         for(int i = 0; i < chain.Count; i++)
         {
             pos[i] = chain[i].transform.position;
+            Debug.Log("Adding Vertex to pos: " + chain[i].transform.position);
         }
-        pos[chain.Count] = chain[0].transform.position;
+        //pos[chain.Count] = chain[0].transform.position;
         LineRenderer lr;
         GameObject go = new GameObject("LR holder");
         lr = go.gameObject.AddComponent<LineRenderer>();
@@ -388,6 +392,13 @@ public class MyPlayerController : MonoBehaviour
         lr.positionCount = pos.Length;
         Debug.Log("Positions: " + String.Join(", ", new List<Vector3>(pos).ConvertAll(pos => pos.ToString()).ToArray()));
         lr.SetPositions(pos);
+        if (dotted)
+            {
+                Debug.Log("Drawing Dotted");
+                lr.textureMode = LineTextureMode.Tile;
+                float width =  lr.startWidth;
+                lr.material.SetTextureScale("_MainTex", new Vector2(0.5f/width, 1.0f));
+            }
         foreach (GameObject item in chain)
         {
             item.GetComponent<MyVertex>().selected = false;

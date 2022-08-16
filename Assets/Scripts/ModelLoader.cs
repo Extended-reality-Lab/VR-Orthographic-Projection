@@ -27,6 +27,19 @@ public class ModelLoader : MonoBehaviour
     public GameObject parentObj;
     public GameObject foldingcube;
 
+    public void unloadAsset(){
+
+        if (myLoadedAssetBundle != null) {
+            myLoadedAssetBundle.Unload(false); //scene is unload from here
+        }
+    }
+
+    public void loadAsset(){
+
+        unloadAsset();
+        myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "default-Android"));
+    }
+
     public void LoadCube(string name) {
         ResetModel();
         //add a switch case for each model that you want accessable
@@ -62,7 +75,7 @@ public class ModelLoader : MonoBehaviour
     }
 
     private void Start() {
-        myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "default-Android"));
+        //myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "default-Android"));
     }
 
 
@@ -79,9 +92,8 @@ public class ModelLoader : MonoBehaviour
         // }
         // Debug.Log(myLoadedAssetBundle);
         // Debug.Log(name);
-        Instantiate(foldingcube);
-        GameObject model_cube = Instantiate(myLoadedAssetBundle.LoadAsset<GameObject>(name), GameObject.Find("model_holder").transform);
-        model_cube.layer = 6;
+        //model_cube.layer = 6;
+        loadAsset();
         model = Instantiate(myLoadedAssetBundle.LoadAsset<GameObject>(name), parentObj.transform);
         model.tag = "model_item";
         Model3D mref = model.AddComponent<Model3D>();
@@ -91,9 +103,19 @@ public class ModelLoader : MonoBehaviour
         mref.default_mat = default_mat;
         mref.highlight_mat = highlight_mat;
         
+        GameObject myfoldingcube = Instantiate(foldingcube);
+        //calcualte where I should position the model to be in the center of foldingcube
+        //calculate how to sacle model to keep it in the box
+        //1. models are square
+        //2. will all have the same origin
+        GameObject model_cube = Instantiate(myLoadedAssetBundle.LoadAsset<GameObject>(name), GameObject.Find("model_holder").transform);
+        //model_cube.transform.localPosition = new Vector3(?,?,?);
+        model_cube.layer = 6;
+
 
     
         controller.model = model;
+        unloadAsset();
     }
 
     private IEnumerator GetBundle()
