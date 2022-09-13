@@ -52,64 +52,70 @@ public class Model3D : MonoBehaviour
         // Debug.Log("Normals: " + String.Join(", ", new List<Vector3>(mesh.normals).ConvertAll(i => i.ToString()).ToArray()));
         // Debug.Log("Triangle Count: " + t.Length);
         // Debug.Log("Normal Count: " + mesh.normals.Length);
+        //int debugCount = 0;
+        // foreach (Vector3 vert in v_new)
+        // {
+        //     triangleMap[vert] = new List<Tri>();
+        // }
+        // Debug.Log(t.Length % 3);
+        // for (int i = 0; i <= t.Length; i+=3)
+        // {
+        //     if (i == t.Length || i + 1 == t.Length || i + 2 == t.Length)
+        //         break;
+        //     Tri myTriangle = new Tri(v[t[i]], v[t[i+1]], v[t[i+2]]);
+        //     triangleMap[v[t[i]]].Add(myTriangle);
+        //     triangleMap[v[t[i+1]]].Add(myTriangle);
+        //     triangleMap[v[t[i+2]]].Add(myTriangle);
+        //     //Debug.Log(myTriangle + " added");
+        // }
 
-        foreach (Vector3 vert in v_new)
-        {
-            triangleMap[vert] = new List<Tri>();
-        }
-        Debug.Log(t.Length % 3);
-        for (int i = 0; i <= t.Length; i+=3)
-        {
-            if (i == t.Length || i + 1 == t.Length || i + 2 == t.Length)
-                break;
-            Tri myTriangle = new Tri(v[t[i]], v[t[i+1]], v[t[i+2]]);
-            triangleMap[v[t[i]]].Add(myTriangle);
-            triangleMap[v[t[i+1]]].Add(myTriangle);
-            triangleMap[v[t[i+2]]].Add(myTriangle);
-            // Debug.Log(myTriangle + " added");
-        }
-
-        foreach (Vector3 vert in v_new)
-        {
-            List<Tri> plane_count = new List<Tri>();
-            foreach (Tri tri1 in triangleMap[vert])
-            {
-                bool add = true;
-                foreach (Tri tri2 in plane_count)
-                {
-                    if (tri1.n == tri2.n)
-                        add = false;
-                }
-                if(add)
-                    plane_count.Add(tri1);
-            }
-            // Debug.Log("Plane Count: " + plane_count.Count);
-            // Debug.Log("Triangle Count: " + triangleMap[vert].Count);
-            bool add2 = true;
-            if (plane_count.Count >= 3)
-            {
-                // foreach (Vector3 vt in final)
-                // {
-                //     if (Vector3.Distance(vert, vt) < threshold)
-                //     {
-                //         add2 = false;
-                //     }
-                // }
-                // if (add2)
-                final.Add(vert);
-            }
-        }
+        // foreach (Vector3 vert in v_new)
+        // {
+        //     List<Tri> plane_count = new List<Tri>();
+        //     foreach (Tri tri1 in triangleMap[vert])
+        //     {
+        //         bool add = true;
+        //         foreach (Tri tri2 in plane_count)
+        //         {
+        //             if (tri1.n == tri2.n)
+        //                 add = false;
+        //         }
+        //         if(add)
+        //             plane_count.Add(tri1);
+        //     }
+        //     //Debug.Log("Plane Count: " + plane_count.Count);
+        //     //Debug.Log("Triangle Count: " + triangleMap[vert].Count);
+        //     bool add2 = true;
+        //     // if (plane_count.Count >= 3)
+        //     // {
+        //         // foreach (Vector3 vt in final)
+        //         // {
+        //         //     if (Vector3.Distance(vert, vt) < threshold)
+        //         //     {
+        //         //         add2 = false;
+        //         //     }
+        //         // }
+        //         // if (add2)
+        //     Debug.Log("plane count: " + plane_count.Count);
+        //     final.Add(vert);
+        //     // }
+        // }    
+        
         /*
         * reads in mesh, only keep the vertex we want, 
         * add MyVertex script yo them, 
         * and add attribute to them and the mash.
         */
-        foreach (var vert in final) {
+        foreach (var vert in v_new) {
+            // Debug.Log(vert);
             GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             GameObject myVert = GameObject.Instantiate(temp, gameObject.transform);
             myVert.tag = "model_item";
             myVert.transform.localPosition = vert;
-            myVert.transform.localScale = new Vector3(.02f,.02f,.02f);
+            //myVert.transform.localScale = new Vector3(.02f,.02f,.02f);
+            //Debug.Log("magnitude: " + this.transform.localScale.magnitude);
+            myVert.transform.localScale = new Vector3(.02f,.02f,.02f) / this.transform.localScale.magnitude;
+            
             MyVertex mref = myVert.AddComponent<MyVertex>();
             mref.controller = controller;
             mref.rightControllerReference = rightControllerReference;

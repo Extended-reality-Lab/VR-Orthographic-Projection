@@ -14,7 +14,7 @@ public class UIScript : MonoBehaviour {
 
     private bool isPressed;
     //two model options right now: default and steps
-    private string[] modelenum = new string[] {"Default", "Steps", "Steps1"};
+    private string[] modelenum = new string[] {"Default", "Steps", "complex", "simple"};
 
 
     void Awake() {

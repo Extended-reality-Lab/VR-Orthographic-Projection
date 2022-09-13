@@ -1684,11 +1684,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5239913482980448100, guid: 440641f98490a6945ab6b3d998c6f272, type: 3}
       propertyPath: m_Options.m_Options.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5239913482980448100, guid: 440641f98490a6945ab6b3d998c6f272, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
-      value: Steps1
+      value: complex_model
+      objectReference: {fileID: 0}
+    - target: {fileID: 5239913482980448100, guid: 440641f98490a6945ab6b3d998c6f272, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[3].m_Text
+      value: simple_model
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 440641f98490a6945ab6b3d998c6f272, type: 3}
