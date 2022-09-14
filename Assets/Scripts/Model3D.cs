@@ -42,11 +42,11 @@ public class Model3D : MonoBehaviour
         MeshFilter[] filter = GetComponentsInChildren<MeshFilter>();
         Mesh mesh = filter[0].mesh;
         Vector3[] v = mesh.vertices;
-        HashSet<Vector3> final = new HashSet<Vector3>();
-        int[] t = mesh.triangles;
+        //HashSet<Vector3> final = new HashSet<Vector3>();
+        //int[] t = mesh.triangles;
         v_new = new HashSet<Vector3>(v);
         Debug.Log("Rendering Vertices...");
-        Dictionary<Vector3, List<Tri>> triangleMap = new Dictionary<Vector3, List<Tri>>();
+        //Dictionary<Vector3, List<Tri>> triangleMap = new Dictionary<Vector3, List<Tri>>();
 
         // Debug.Log("Triangles: " + String.Join(", ", new List<int>(t).ConvertAll(i => i.ToString()).ToArray()));
         // Debug.Log("Normals: " + String.Join(", ", new List<Vector3>(mesh.normals).ConvertAll(i => i.ToString()).ToArray()));
@@ -100,13 +100,32 @@ public class Model3D : MonoBehaviour
         //     final.Add(vert);
         //     // }
         // }    
-        
+
         /*
         * reads in mesh, only keep the vertex we want, 
         * add MyVertex script yo them, 
         * and add attribute to them and the mash.
         */
+
+        List<Vector3> compare = new List<Vector3>();
+
         foreach (var vert in v_new) {
+
+  /*          bool make = true;
+            foreach(Vector3 v2 in compare)
+            {
+                float dist = Vector3.Distance(vert, v2);
+                if (dist < 0.0001)
+                {
+                    Debug.Log(dist);
+                    make = false;
+                    break;
+                }
+            }
+
+            if (!make)
+                continue;*/
+            compare.Add(vert);
             // Debug.Log(vert);
             GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             GameObject myVert = GameObject.Instantiate(temp, gameObject.transform);

@@ -50,6 +50,7 @@ public class MyPlayerController : MonoBehaviour
     GameObject active_v;
     bool rendered_proj_lines = true;
     bool dotted = false;
+    public bool freeze = false;
 
     public InputActionReference leftGrab;
     public InputActionReference rightGrab;
@@ -219,6 +220,7 @@ public class MyPlayerController : MonoBehaviour
                         LineManager LM = active_line.AddComponent<LineManager>();
                         line_attached = true;
                     }
+                    freeze = true;
                     break;
                 }
             }
@@ -232,7 +234,8 @@ public class MyPlayerController : MonoBehaviour
     private void StartGrabGraph(InputAction.CallbackContext ctx) {
         // TeleportRay.SetActive(false);
         // UIObject.SetActive(false);
-
+        if (freeze)
+            return;
         if (ctx.action.actionMap.name == "XRI LeftHand" && GrabStatus == GrabStatusEnum.Right) {
             GrabStatus = GrabStatusEnum.Both;
         } else if (ctx.action.actionMap.name == "XRI RightHand" && GrabStatus == GrabStatusEnum.Left) {
@@ -248,7 +251,8 @@ public class MyPlayerController : MonoBehaviour
     private void EndGrabGraph(InputAction.CallbackContext ctx) {
         // TeleportRay.SetActive(true);
         // UIObject.SetActive(true);
-
+        if (freeze)
+            return;
         if (GrabStatus == GrabStatusEnum.Both && ctx.action.actionMap.name == "XRI LeftHand") {
             GrabStatus = GrabStatusEnum.Right;
         } else if (GrabStatus == GrabStatusEnum.Both) {
@@ -288,6 +292,8 @@ public class MyPlayerController : MonoBehaviour
     }
 
     private void GrabGraph(InputAction.CallbackContext ctx) {
+        if (freeze)
+            return;
         if (!grabbing && GrabStatus != GrabStatusEnum.Both && model) {
             grabbing = true;
             model.transform.SetParent((GrabStatus == GrabStatusEnum.Left) ? ControllerLeft.transform : ControllerRight.transform);

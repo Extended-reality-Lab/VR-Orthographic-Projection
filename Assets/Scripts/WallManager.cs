@@ -86,7 +86,7 @@ public class WallManager : MonoBehaviour
         myVert.tag = "wall_item";
         Vector3 n_pos = pos;
         myVert.transform.position = n_pos;
-        myVert.transform.localScale = new Vector3(.02f,.02f,.02f);
+        myVert.transform.localScale = new Vector3(.015f,.015f,.015f);
         MyVertex mref = myVert.AddComponent<MyVertex>();
         mref.controller = controller;
         mref.rightControllerReference = rightControllerReference;

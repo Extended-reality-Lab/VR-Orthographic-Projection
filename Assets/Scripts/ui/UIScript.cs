@@ -14,7 +14,8 @@ public class UIScript : MonoBehaviour {
 
     private bool isPressed;
     //two model options right now: default and steps
-    private string[] modelenum = new string[] {"Default", "Steps", "complex", "simple"};
+    private string[] modelenum1 = new string[] {"Default"};
+    private string[] modelenum2 = new string[] {"complex", "simple" };
 
 
     void Awake() {
@@ -26,8 +27,16 @@ public class UIScript : MonoBehaviour {
     }
 
     public void OnApplyInteract() {
-        string modelname = modelenum[modeldropdown.value];
-        ModelLoader.LoadCube(modelname);
+        if(modeldropdown.options.Count > 1)
+        {
+            string modelname = modelenum2[modeldropdown.value];
+            ModelLoader.LoadCube(modelname);
+        }
+        else
+        {
+            string modelname = modelenum1[modeldropdown.value];
+            ModelLoader.LoadCube(modelname);
+        }
     }
 
     private void ToggleMenu(InputAction.CallbackContext context) {

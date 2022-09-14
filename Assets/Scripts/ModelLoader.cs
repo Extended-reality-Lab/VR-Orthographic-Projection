@@ -96,6 +96,12 @@ public class ModelLoader : MonoBehaviour
         loadAsset();
         model = Instantiate(myLoadedAssetBundle.LoadAsset<GameObject>(name), parentObj.transform);
         model.tag = "model_item";
+        
+        if (name == "complex")
+            model.transform.localScale = model.transform.localScale * 2;
+        if (name == "simple")
+            model.transform.localScale = model.transform.localScale * 4;
+        model.transform.eulerAngles = Vector3.zero;
         Model3D mref = model.AddComponent<Model3D>();
         mref.controller = controller;
         mref.rightControllerReference = rightControllerReference;
@@ -109,6 +115,11 @@ public class ModelLoader : MonoBehaviour
         //1. models are square
         //2. will all have the same origin
         GameObject model_cube = Instantiate(myLoadedAssetBundle.LoadAsset<GameObject>(name), GameObject.Find("model_holder").transform);
+        model_cube.transform.eulerAngles = Vector3.zero;
+        if (name == "complex")
+            model_cube.transform.localScale = model_cube.transform.localScale * 1.5f;
+        if (name == "simple")
+            model_cube.transform.localScale = model_cube.transform.localScale * 4;
         //model_cube.transform.localPosition = new Vector3(?,?,?);
         model_cube.layer = 6;
 
@@ -166,5 +177,6 @@ public class ModelLoader : MonoBehaviour
         {
             Destroy(o);
         }
+        controller.freeze = false;
     }
 }

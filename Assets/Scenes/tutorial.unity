@@ -990,6 +990,7 @@ MonoBehaviour:
   dotted_line: {fileID: 2100000, guid: 191cb7a24f6235749ba5f634d83e0432, type: 2}
   ton: {fileID: 1840556702}
   toff: {fileID: 1895217190}
+  freeze: 0
   leftGrab: {fileID: -1129433818936076581, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightGrab: {fileID: 5953054348715916520, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightTrigger: {fileID: 6628925328003034467, guid: c348712bda248c246b8c49b3db54643f, type: 3}
@@ -2583,7 +2584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5239913482980448100, guid: 440641f98490a6945ab6b3d998c6f272, type: 3}
       propertyPath: m_Options.m_Options.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5239913482980448100, guid: 440641f98490a6945ab6b3d998c6f272, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
@@ -4809,8 +4810,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'If the model or box do not appear, or have bugs, click Reset Model to
-    reset them. '
+  m_Text: If the model or box do not appear, or have bugs, click Reset Model to reset
+    them.
 --- !u!222 &705382031
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4945,7 +4946,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -14.499991}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!328 &714410977
@@ -5278,8 +5279,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743979018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: -0.012, y: 0.122, z: 0.125}
+  m_LocalScale: {x: 0.012, y: 0.012, z: 0.012}
   m_Children: []
   m_Father: {fileID: 865589824}
   m_RootOrder: 0
@@ -5304,7 +5305,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743979018}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5316,7 +5317,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 027726a0a3063014681c05802373bd83, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8689,8 +8690,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 78.2}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 60}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1322086196
 MonoBehaviour:
@@ -8725,8 +8726,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Click and drag a vertex point from the model, approach the wall then release
-    right trigger. '
+  m_Text: Click and drag a vertex point from the model, approach the wall then release
+    right trigger. To do so, you can overlap the pink square on your right controller
+    until the vertex is highlighed and hold fown the trigger button.
 --- !u!222 &1322086197
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10087,8 +10089,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00023651, y: -33.6}
-  m_SizeDelta: {x: 200, y: 150}
+  m_AnchoredPosition: {x: -0.00023651, y: -44.7}
+  m_SizeDelta: {x: 200, y: 145}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1543755264
 MonoBehaviour:
@@ -13014,8 +13016,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00023651, y: -33.6}
-  m_SizeDelta: {x: 200, y: 150}
+  m_AnchoredPosition: {x: -0.00023651, y: -53.4}
+  m_SizeDelta: {x: 200, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1945894381
 MonoBehaviour:
@@ -13537,8 +13539,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 78.2}
-  m_SizeDelta: {x: 200, y: 60}
+  m_AnchoredPosition: {x: 0, y: 63.3}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2062295778
 MonoBehaviour:
@@ -13573,8 +13575,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'You can use two middle finger grips to move and resize the model; and
-    right joystick to adjust the cube when grabing it. '
+  m_Text: You can use two middle finger grips to move and resize the model; and right
+    joystick to adjust the cube when grabing it. The position and scale of the model
+    with be locked once you begin drawing lines
 --- !u!222 &2062295779
 CanvasRenderer:
   m_ObjectHideFlags: 0
