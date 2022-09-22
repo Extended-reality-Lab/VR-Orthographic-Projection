@@ -3611,7 +3611,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00023651, y: -33.6}
+  m_AnchoredPosition: {x: -0.00023651, y: -27}
   m_SizeDelta: {x: 200, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &430842559
@@ -4282,8 +4282,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 78.2}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 68}
+  m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &528255327
 MonoBehaviour:
@@ -4318,8 +4318,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'They represent different side of 3 isometric views. Mint for Top, Blue
-    for Left, Purple for Right. '
+  m_Text: 'The three coloed walls represent different sides of model''s projection.
+    Mint for Top, Blue for Left, Purple for Right. '
 --- !u!222 &528255328
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4810,8 +4810,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: If the model or box do not appear, or have bugs, click Reset Model to reset
-    them.
+  m_Text: You can reset the model by pressing "Reset Model" at anytime if you make
+    a significant mistake
 --- !u!222 &705382031
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5459,7 +5459,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.2449, y: 0.2}
+  m_AnchoredPosition: {x: 0.2449, y: 0.1762}
   m_SizeDelta: {x: 241, y: 266.96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!65 &773881155
@@ -5700,8 +5700,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Click and drag on a point on the wall to another point, to draw lines
-    between these two points. '
+  m_Text: You can  draw lines between vertices on the wall in the same manner.
 --- !u!222 &800328972
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6521,7 +6520,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 888153230}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.629, y: 1.451, z: 0.148}
+  m_LocalPosition: {x: 0.629, y: 1.251, z: 0.148}
   m_LocalScale: {x: 2, y: 0.08469177, z: 2}
   m_Children: []
   m_Father: {fileID: 1459453122}
@@ -6555,7 +6554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c066eca28c7145458df35a0b67d668d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightControllerReference: {fileID: 865589823}
+  rightControllerReference: {fileID: 743979018}
   threshold: 0.1
   controller: {fileID: 142376162}
   highlight_mat: {fileID: 2100000, guid: 027726a0a3063014681c05802373bd83, type: 2}
@@ -6670,7 +6669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5910a795f0c997d42a86a829be249271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightControllerReference: {fileID: 865589823}
+  rightControllerReference: {fileID: 743979018}
   threshold: 0.1
   highlight_mat: {fileID: 2100000, guid: 027726a0a3063014681c05802373bd83, type: 2}
   default_mat: {fileID: 2100000, guid: 9e9a8b53b7f709c4b9b107947581c4e4, type: 2}
@@ -6853,7 +6852,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00023651, y: -33.6}
+  m_AnchoredPosition: {x: -0.00023651, y: -39}
   m_SizeDelta: {x: 200, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1003509114
@@ -7900,8 +7899,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 78.2}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 73}
+  m_SizeDelta: {x: 200, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1177994298
 MonoBehaviour:
@@ -7936,8 +7935,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Now, draw the isometric views on two sides: Left and Right (Draw wall
-    lines on blue and purple walls)'
+  m_Text: Before continuing, try drawing the projection views on two sides for this
+    simple cube (Draw wall lines on blue and purple walls)
 --- !u!222 &1177994299
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8267,7 +8266,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 74.4}
-  m_SizeDelta: {x: 200, y: 60}
+  m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1201189889
 MonoBehaviour:
@@ -8302,8 +8301,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You can also do it by pressing A to select points, then click Draw Selected.
-    (Click Clear Selected to de-select points)
+  m_Text: You can also draw lines by selecting vertices in a chain using the A button.
+    After this, pressing the "Draw Selected" in the "Drawing" tab will automatically
+    draw the chain of lines.
 --- !u!222 &1201189890
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8382,7 +8382,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'You can toggle on/off lines under Drawing tab. '
+  m_Text: You can toggle on/off lines under "Drawing" tab to reduce visual clutter
+    while drawing a lot of lines.
 --- !u!222 &1249517729
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8561,7 +8562,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00023651, y: -33.6}
+  m_AnchoredPosition: {x: -0.00023651, y: -37}
   m_SizeDelta: {x: 200, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1293712917
@@ -8690,7 +8691,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 60}
+  m_AnchoredPosition: {x: 0, y: 63}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1322086196
@@ -8726,9 +8727,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Click and drag a vertex point from the model, approach the wall then release
-    right trigger. To do so, you can overlap the pink square on your right controller
-    until the vertex is highlighed and hold fown the trigger button.
+  m_Text: To draw a projection line from the model to a wall, you can overlap the
+    pink square attached to the right controller over a vertex on the model, hold
+    down the trigger button, and drag it to the wall before releasing the trigger.
 --- !u!222 &1322086197
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8806,7 +8807,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362036353}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.371, y: 1.451, z: -0.854}
+  m_LocalPosition: {x: -0.371, y: 1.251, z: -0.854}
   m_LocalScale: {x: 2, y: 0.08, z: 2}
   m_Children: []
   m_Father: {fileID: 1459453122}
@@ -8886,7 +8887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c066eca28c7145458df35a0b67d668d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightControllerReference: {fileID: 865589823}
+  rightControllerReference: {fileID: 743979018}
   threshold: 0.1
   controller: {fileID: 142376162}
   highlight_mat: {fileID: 2100000, guid: 027726a0a3063014681c05802373bd83, type: 2}
@@ -9020,7 +9021,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.718, y: 0.4694695}
+  m_AnchoredPosition: {x: 2.718, y: -3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!328 &1368695232
@@ -9504,8 +9505,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 78.2}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 73}
+  m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1423415980
 MonoBehaviour:
@@ -9540,8 +9541,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You can click Unfold Model, to observe the orthgraphic projection views
-    from 6 sides with the box.
+  m_Text: You can click "Unfold Model" to observe the orthgraphic projection views
+    from 6 sides with the box. The box is located on the table to the right of the
+    model.
 --- !u!222 &1423415981
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10089,7 +10091,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00023651, y: -44.7}
+  m_AnchoredPosition: {x: -0.00023651, y: -36}
   m_SizeDelta: {x: 200, y: 145}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1543755264
@@ -10958,7 +10960,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'You have finished the tutorial.
+  m_Text: 'You have finished the tutorial!
 
     Please turn around and click "Go
     Back" to the Menu Scene and start Practice Scene ftom there!'
@@ -12896,8 +12898,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 78.2}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 72}
+  m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1935102983
 MonoBehaviour:
@@ -12932,8 +12934,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'To draw dash lines in the later exercise, you need to toggle dotted line
-    on, before connecting points.   '
+  m_Text: Sometimes you will need to draw dashed lines to indicate hidden features.
+    To do this, you simply need to make sure "Draw Dashed Lines" is checked before
+    drawing a line.
 --- !u!222 &1935102984
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13575,9 +13578,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You can use two middle finger grips to move and resize the model; and right
-    joystick to adjust the cube when grabing it. The position and scale of the model
-    with be locked once you begin drawing lines
+  m_Text: You can use the controller's grip buttons to move and resize the mode.
+    The position and scale of the model with be locked once you begin drawing lines.
 --- !u!222 &2062295779
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13656,7 +13658,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Select default from drop down, and click Load Model with right trigger. '
+  m_Text: 'Select default from the drop down and click "Load Model" using the right
+    trigger. '
 --- !u!222 &2066191410
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13761,7 +13764,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2105718246}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.633, y: 2.4559999, z: -0.854}
+  m_LocalPosition: {x: 0.633, y: 2.256, z: -0.854}
   m_LocalScale: {x: 2, y: 0.08, z: 2}
   m_Children: []
   m_Father: {fileID: 1459453122}
@@ -13795,12 +13798,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c066eca28c7145458df35a0b67d668d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightControllerReference: {fileID: 865589823}
+  rightControllerReference: {fileID: 743979018}
   threshold: 0.1
   controller: {fileID: 142376162}
   highlight_mat: {fileID: 2100000, guid: 027726a0a3063014681c05802373bd83, type: 2}
   default_mat: {fileID: 2100000, guid: 9e9a8b53b7f709c4b9b107947581c4e4, type: 2}
-  surface: 2.41
+  surface: 2.21
   can_spawn_vertex: 0
   spawn_point: {x: 0, y: 0, z: 0}
   depth_axis: 1

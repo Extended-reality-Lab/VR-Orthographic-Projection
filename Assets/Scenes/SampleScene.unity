@@ -592,6 +592,7 @@ MonoBehaviour:
   dotted_line: {fileID: 2100000, guid: 191cb7a24f6235749ba5f634d83e0432, type: 2}
   ton: {fileID: 1840556702}
   toff: {fileID: 1895217190}
+  freeze: 0
   leftGrab: {fileID: -1129433818936076581, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightGrab: {fileID: 5953054348715916520, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightTrigger: {fileID: 6628925328003034467, guid: c348712bda248c246b8c49b3db54643f, type: 3}
@@ -4142,7 +4143,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 888153230}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.629, y: 1.451, z: 0.148}
+  m_LocalPosition: {x: 0.629, y: 1.251, z: 0.148}
   m_LocalScale: {x: 2, y: 0.08469177, z: 2}
   m_Children: []
   m_Father: {fileID: 1459453122}
@@ -5374,7 +5375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362036353}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.371, y: 1.451, z: -0.854}
+  m_LocalPosition: {x: -0.371, y: 1.251, z: -0.854}
   m_LocalScale: {x: 2, y: 0.08, z: 2}
   m_Children: []
   m_Father: {fileID: 1459453122}
@@ -8221,7 +8222,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2105718246}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.633, y: 2.4559999, z: -0.854}
+  m_LocalPosition: {x: 0.633, y: 2.256, z: -0.854}
   m_LocalScale: {x: 2, y: 0.08, z: 2}
   m_Children: []
   m_Father: {fileID: 1459453122}
@@ -8260,7 +8261,7 @@ MonoBehaviour:
   controller: {fileID: 142376162}
   highlight_mat: {fileID: 2100000, guid: 027726a0a3063014681c05802373bd83, type: 2}
   default_mat: {fileID: 2100000, guid: 9e9a8b53b7f709c4b9b107947581c4e4, type: 2}
-  surface: 2.41
+  surface: 2.21
   can_spawn_vertex: 0
   spawn_point: {x: 0, y: 0, z: 0}
   depth_axis: 1
