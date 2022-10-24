@@ -91,16 +91,16 @@ public class ModelLoader : MonoBehaviour
         //     yield break;
         // }
         // Debug.Log(myLoadedAssetBundle);
-        // Debug.Log(name);
+         Debug.Log(name);
         //model_cube.layer = 6;
         loadAsset();
         model = Instantiate(myLoadedAssetBundle.LoadAsset<GameObject>(name), parentObj.transform);
         model.tag = "model_item";
         
         if (name == "complex")
-            model.transform.localScale = model.transform.localScale * 2;
+            model.transform.localScale = model.transform.localScale * .5f;
         if (name == "simple")
-            model.transform.localScale = model.transform.localScale * 4;
+            model.transform.localScale = model.transform.localScale * .5f;
         model.transform.eulerAngles = Vector3.zero;
         Model3D mref = model.AddComponent<Model3D>();
         mref.controller = controller;
@@ -117,10 +117,11 @@ public class ModelLoader : MonoBehaviour
         GameObject model_cube = Instantiate(myLoadedAssetBundle.LoadAsset<GameObject>(name), GameObject.Find("model_holder").transform);
         model_cube.transform.eulerAngles = Vector3.zero;
         if (name == "complex")
-            model_cube.transform.localScale = model_cube.transform.localScale * 1.5f;
+            model_cube.transform.localScale = model_cube.transform.localScale * .4f;
         if (name == "simple")
-            model_cube.transform.localScale = model_cube.transform.localScale * 4;
-        //model_cube.transform.localPosition = new Vector3(?,?,?);
+            model_cube.transform.localScale = model_cube.transform.localScale * .4f;
+        if (name == "simple" || name == "complex")
+            model_cube.transform.localPosition = new Vector3(.4f,-.3f,-.2f);
         model_cube.layer = 6;
 
 

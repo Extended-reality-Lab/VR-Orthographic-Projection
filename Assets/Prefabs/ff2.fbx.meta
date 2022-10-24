@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b261d039a06b7c1428a577de77284a34
+guid: 4c60f29271cbb0c46826933aab3d857b
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -98,5 +98,5 @@ ModelImporter:
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   additionalBone: 0
   userData: 
-  assetBundleName: default
+  assetBundleName: 
   assetBundleVariant: 
