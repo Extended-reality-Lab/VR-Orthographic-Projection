@@ -13,10 +13,16 @@ public class SceneSwitcher : MonoBehaviour
         SceneManager.LoadScene("tutorial");
     }
 
-    public void playPractice()
+    public void playEX1()
     {
         //modelLoader.unloadAsset();
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("EX1");
+    }
+
+    public void playEX2()
+    {
+        //modelLoader.unloadAsset();
+        SceneManager.LoadScene("EX2");
     }
 
     public void backToMenu()
