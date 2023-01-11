@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+//using System.Diagnostics;
 
 public class MyPlayerController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class MyPlayerController : MonoBehaviour
 
     bool grabbing;
     GameObject highlighted_vertex = null;
+    GameObject selected_line = null;
     bool currentlyScaling;
 
     public WallManager[] walls;
@@ -47,6 +49,9 @@ public class MyPlayerController : MonoBehaviour
     public Material dotted_line;
     public GameObject ton;
     public GameObject toff;
+    public float threshold;
+    public GameObject rightControllerReference;
+    public MyPlayerController controller;
     GameObject active_v;
     bool rendered_proj_lines = true;
     bool dotted = false;
@@ -58,6 +63,7 @@ public class MyPlayerController : MonoBehaviour
     // public InputActionReference leftTrigger;
     public InputActionReference rightTrigger;
     public InputActionReference rightPrimary;
+    public InputActionReference rightSecondary;
     public List<GameObject> chain = new List<GameObject>();
 
     private void Start() {
@@ -72,6 +78,7 @@ public class MyPlayerController : MonoBehaviour
         // leftTrigger.action.canceled += tryRelease;
         rightTrigger.action.canceled += tryRelease;
         rightPrimary.action.started += tryChain;
+        rightSecondary.action.started += tryDeleteLine;
     }
 
     public void setHighlightedVertex(GameObject o, bool b) {
@@ -83,6 +90,18 @@ public class MyPlayerController : MonoBehaviour
         }
     }
 
+    public void setSelectedLine(GameObject o, bool b)
+    {
+        if (!b)
+        {
+            selected_line = null;
+        }
+        else
+        {
+            selected_line = o;
+        }
+    }
+
     public void tryChain(InputAction.CallbackContext ctx) {
         if (ctx.action.actionMap.name == "XRI RightHand" && highlighted_vertex)
         {
@@ -91,6 +110,25 @@ public class MyPlayerController : MonoBehaviour
             highlighted_vertex.GetComponent<MeshRenderer>().material = selected_v;
             Debug.Log("Added Vertex: " + highlighted_vertex.transform.position);
         }
+    }
+
+    public void tryDeleteLine(InputAction.CallbackContext ctx)
+    {
+        //set the reference to the line ex: setHighlighted Vertex
+        //check the if the positions overlap using transform.position (ControllerRight.transform.position) and LineRenderer.Getposition)
+        //if they do overlap delete the line that is referenced by the original function
+        if (ctx.action.actionMap.name == "XRI RightHand" && selected_line)
+        {
+            Destroy(selected_line);
+        }
+        Debug.Log("Testing Button");
+        /*for(int point = 0; point<selected_line.positionCount; point++)
+        {
+            if(CotnrollerRight.transform.position == selected_line.GetPosition(point))
+            {
+                destroy(selected_line);
+            }
+        }*/
     }
 
     private void trySelect(InputAction.CallbackContext ctx) {
@@ -155,6 +193,7 @@ public class MyPlayerController : MonoBehaviour
 
     }
 
+
     public void ToggleDottedOn() {
         dotted = true;
         Debug.Log("Toggling Dotted, is now: " + dotted);
@@ -218,6 +257,10 @@ public class MyPlayerController : MonoBehaviour
                     }
                     if (active_line) {
                         LineManager LM = active_line.AddComponent<LineManager>();
+                        LM.controller = controller;
+                        LM.threshold = threshold;
+                        LM.rightControllerReference = rightControllerReference;
+
                         line_attached = true;
                     }
                     freeze = true;
@@ -230,6 +273,7 @@ public class MyPlayerController : MonoBehaviour
             selecting = false;
         }
     }
+
 
     private void StartGrabGraph(InputAction.CallbackContext ctx) {
         // TeleportRay.SetActive(false);
@@ -363,6 +407,7 @@ public class MyPlayerController : MonoBehaviour
 
         WallManager parent_wall = chain[0].GetComponent<MyVertex>().GetWallManager();
         Model3D parent_model = chain[0].GetComponent<MyVertex>().GetModel();
+        
         //Vector3[] pos = new Vector3[chain.Count + 1];
         Vector3[] pos = new Vector3[chain.Count];
         Debug.Log("Chain count: " + chain.Count);
@@ -412,6 +457,7 @@ public class MyPlayerController : MonoBehaviour
         }
         chain = new List<GameObject>();
     }
+
 
     public void DrawCurved() {
         if (chain.Count == 1)

@@ -6,6 +6,10 @@ public class LineManager : MonoBehaviour
 {
 
     public LineRenderer lr;
+    public GameObject rightControllerReference;
+    bool RinSelectableRange;
+    public float threshold;
+    public MyPlayerController controller;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +24,32 @@ public class LineManager : MonoBehaviour
         positions[0] = gameObject.transform.position;
         lr.positionCount = positions.Length;
         lr.SetPositions(positions);
+
+        bool Rtemp = RinSelectableRange;
+
+
+
+        for (int point = 0; point < positions.Length; point++)
+        {
+            if(Vector3.Distance(gameObject.transform.position, rightControllerReference.transform.position) < threshold)
+            {
+                RinSelectableRange = true;
+                break;
+            }
+
+        }
+
+        //depends on previous and current frame 
+        if ((RinSelectableRange && !Rtemp))
+        {
+            //highlightOn();
+            controller.setSelectedLine(gameObject, true);
+        }
+        else if ((!RinSelectableRange && Rtemp))
+        {
+            //highlightOff();
+            controller.setSelectedLine(gameObject, false);
+        }
     }
+
 }
