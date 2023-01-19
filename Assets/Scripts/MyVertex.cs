@@ -9,6 +9,7 @@ public class MyVertex : MonoBehaviour
 {
     public GameObject rightControllerReference;
     public float threshold;
+    public bool onModel;
     bool RinSelectableRange;
     bool LinSelectableRange;
     public MyPlayerController controller;

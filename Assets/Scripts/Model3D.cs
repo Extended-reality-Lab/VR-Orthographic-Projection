@@ -9,6 +9,7 @@ public class Model3D : MonoBehaviour
     public GameObject rightControllerReference;
     public float threshold;
     public MyPlayerController controller;
+    public bool onModel;
 
     MeshRenderer r;
     public Material highlight_mat;
@@ -36,7 +37,7 @@ public class Model3D : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
+    // Start is called before the first frame updat
     void Start()
     {
         MeshFilter[] filter = GetComponentsInChildren<MeshFilter>();
@@ -136,6 +137,7 @@ public class Model3D : MonoBehaviour
             myVert.transform.localScale = new Vector3(.02f,.02f,.02f) / this.transform.localScale.magnitude;
             
             MyVertex mref = myVert.AddComponent<MyVertex>();
+            mref.onModel = true;
             mref.controller = controller;
             mref.rightControllerReference = rightControllerReference;
             mref.threshold = threshold;

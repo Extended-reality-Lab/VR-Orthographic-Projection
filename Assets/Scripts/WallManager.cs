@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+//using System.Diagnostics;
 
 public class WallManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject rightControllerReference;
     public float threshold;
+    public bool onModel;
     public MyPlayerController controller;
     public Material highlight_mat;
     public Material default_mat;
@@ -18,6 +20,7 @@ public class WallManager : MonoBehaviour
 
     public int depth_axis;
     public List<GameObject> rendered_vertices = new List<GameObject>();
+    public List<MyVertex> list_of_vertices = new List<MyVertex>();
     // Update is called once per frame
 
     /*
@@ -70,14 +73,14 @@ public class WallManager : MonoBehaviour
         } 
     }
 
-    //disable can_spawn_vertex when exit
+    //disable can_spawn_vertex when exi
     private void OnCollisionExit(Collision other) {
         if (other.gameObject.tag == "GameController") {
             Debug.Log("End Collision with controller");
             can_spawn_vertex = false;
         } 
     }
-
+    //generate a list, and every time MakeV is called, add the vertex to the list
     public Vector3 makeV(Vector3 pos)
     {
         Debug.Log("Spawning Vertex");
@@ -90,11 +93,14 @@ public class WallManager : MonoBehaviour
         MyVertex mref = myVert.AddComponent<MyVertex>();
         mref.controller = controller;
         mref.rightControllerReference = rightControllerReference;
+        Debug.Log("right controller ref in wall manager" + rightControllerReference + " confirmed");
+        mref.onModel = false;
         mref.threshold = threshold;
         mref.default_mat = default_mat;
         mref.highlight_mat = highlight_mat;
         mref.SetWall(gameObject.GetComponent<WallManager>());
         rendered_vertices.Add(myVert);
+        list_of_vertices.Add(mref);
         Destroy(temp);
         return n_pos;
     }

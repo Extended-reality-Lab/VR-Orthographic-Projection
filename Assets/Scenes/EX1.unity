@@ -592,11 +592,15 @@ MonoBehaviour:
   dotted_line: {fileID: 2100000, guid: 191cb7a24f6235749ba5f634d83e0432, type: 2}
   ton: {fileID: 1840556702}
   toff: {fileID: 1895217190}
+  threshold: 0.01
+  rightControllerReference: {fileID: 743979018}
+  controller: {fileID: 142376162}
   freeze: 0
   leftGrab: {fileID: -1129433818936076581, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightGrab: {fileID: 5953054348715916520, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightTrigger: {fileID: 6628925328003034467, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightPrimary: {fileID: -1138388115906915927, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  rightSecondary: {fileID: 7720840037730027672, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   chain: []
 --- !u!114 &142376163
 MonoBehaviour:

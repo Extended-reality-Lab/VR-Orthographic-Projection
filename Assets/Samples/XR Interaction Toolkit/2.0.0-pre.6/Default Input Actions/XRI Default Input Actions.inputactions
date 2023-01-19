@@ -816,6 +816,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "delete",
+                    "type": "Button",
+                    "id": "2dc9c2a2-ccfb-4427-8ef8-89037b3d4334",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1201,6 +1210,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "chain",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "676fe820-4e96-4c00-88a2-9d4d6de6b71f",
+                    "path": "<XRController>{RightHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "delete",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using System.Diagnostics;
+//using System.Diagnostics;
 //using System.Diagnostics;
 
 public class MyPlayerController : MonoBehaviour
@@ -81,12 +83,18 @@ public class MyPlayerController : MonoBehaviour
         rightSecondary.action.started += tryDeleteLine;
     }
 
+    //If vertex exists, dont spawn
+    //find a way to delete line from middle
+    //cant delete vertex on object DONE
+    //line not deleteing with draw select cause there is no point
+
     public void setHighlightedVertex(GameObject o, bool b) {
         if (!b) {
             highlighted_vertex = null;
         }
         else {
             highlighted_vertex = o;
+            UnityEngine.Debug.Log("Model Vertex " + highlighted_vertex.GetComponent<MyVertex>().onModel);
         }
     }
 
@@ -108,20 +116,44 @@ public class MyPlayerController : MonoBehaviour
             chain.Add(highlighted_vertex);
             highlighted_vertex.GetComponent<MyVertex>().selected = true;
             highlighted_vertex.GetComponent<MeshRenderer>().material = selected_v;
-            Debug.Log("Added Vertex: " + highlighted_vertex.transform.position);
+            UnityEngine.Debug.Log("Added Vertex: " + highlighted_vertex.transform.position);
         }
     }
 
     public void tryDeleteLine(InputAction.CallbackContext ctx)
     {
-        //set the reference to the line ex: setHighlighted Vertex
-        //check the if the positions overlap using transform.position (ControllerRight.transform.position) and LineRenderer.Getposition)
-        //if they do overlap delete the line that is referenced by the original function
-        if (ctx.action.actionMap.name == "XRI RightHand" && selected_line)
+        //Right now need to change the position and the ray to be apart of the object, then checkhj
+        if (ctx.action.actionMap.name == "XRI RightHand" && selected_line && selected_line.GetComponent<LineManager>().hit.collider.tag == "GameController")
         {
-            Destroy(selected_line);
+           // UnityEngine.Debug.Log("Added Vertex: " + selected_line.GetComponent<LineRenderer>().bounds);
+            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //sphere.transform.position = selected_line.GetComponent<LineRenderer>().transform.position;
+            //sphere.transform.localScale = new Vector3(.1f, .1f, .1f);
+            if (Physics.Raycast(selected_line.transform.position, selected_line.transform.TransformDirection(selected_line.GetComponent<LineManager>().direction * selected_line.GetComponent<LineManager>().distance), out selected_line.GetComponent<LineManager>().hit, Mathf.Infinity, selected_line.GetComponent<LineManager>().layerMask))
+            {
+                UnityEngine.Debug.Log("hit Data " + selected_line.GetComponent<LineManager>().hit.collider.tag);
+                if (selected_line.GetComponent<LineManager>().hit.collider.tag == "GameController")
+                {
+                    UnityEngine.Debug.Log("REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+                    Destroy(selected_line);
+                }
+            }
         }
-        Debug.Log("Testing Button");
+        //UnityEngine.Debug.Log("Testing Button");
+       // UnityEngine.Debug.Log("Model Vertex " + highlighted_vertex.GetComponent<MyVertex>().onModel);
+        if (ctx.action.actionMap.name == "XRI RightHand" && highlighted_vertex && highlighted_vertex.GetComponent<MyVertex>().onModel == false)
+        {
+            foreach (WallManager wall in walls)
+            {
+                WallManager parent_wall = active_v.GetComponent<MyVertex>().GetWallManager();
+                parent_wall = wall.GetComponent<WallManager>();
+                parent_wall.rendered_vertices.Remove(highlighted_vertex);
+                UnityEngine.Debug.Log("STOP THE COUNT FOR REAL" + parent_wall.rendered_vertices.Count);
+            }
+            Model3D parent_model = active_v.GetComponent<MyVertex>().GetModel();
+            Destroy(highlighted_vertex);
+        }
+        //UnityEngine.Debug.Log("Testing Button");
         /*for(int point = 0; point<selected_line.positionCount; point++)
         {
             if(CotnrollerRight.transform.position == selected_line.GetPosition(point))
@@ -196,21 +228,21 @@ public class MyPlayerController : MonoBehaviour
 
     public void ToggleDottedOn() {
         dotted = true;
-        Debug.Log("Toggling Dotted, is now: " + dotted);
+        UnityEngine.Debug.Log("Toggling Dotted, is now: " + dotted);
         ton.SetActive(false);
         toff.SetActive(true);
     }
 
     public void ToggleDottedOff() {
         dotted = false;
-        Debug.Log("Toggling Dotted, is now: " + dotted);
+        UnityEngine.Debug.Log("Toggling Dotted, is now: " + dotted);
         toff.SetActive(false);
         ton.SetActive(true);
     }
 
     public void ToggleDotted(bool b) {
         dotted = b;
-        Debug.Log("Toggling Dotted, is now: " + dotted);
+        UnityEngine.Debug.Log("Toggling Dotted, is now: " + dotted);
         // toff.SetActive(false);
         // ton.SetActive(true);
     }
@@ -233,8 +265,21 @@ public class MyPlayerController : MonoBehaviour
                         t_pos = Snap(wall.spawn_point, lineStart);
                     Vector3[] positions = new Vector3[2];
                     positions[0] = lineStart;
+                    //iterate through the list and check if a vertex at t_pos already exists
+                    //if not, then create the vertex
+                    //else continue
                     positions[1] = wall.makeV(t_pos);
                     WallManager parent_wall = active_v.GetComponent<MyVertex>().GetWallManager();
+                    /*parent_wall = wall.GetComponent<WallManager>();
+                    UnityEngine.Debug.Log("STOP THE COUNT" + parent_wall.rendered_vertices.Count);
+                    for(int i = 0; i < parent_wall.rendered_vertices.Count; i++)
+                    {
+                        UnityEngine.Debug.Log("Congrats you played yourself" + parent_wall.rendered_vertices[i].transform.position);
+                        if(parent_wall.rendered_vertices[i].transform.position == t_pos)
+                        {
+                            UnityEngine.Debug.Log("REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+                        }
+                    }*/
                     Model3D parent_model = active_v.GetComponent<MyVertex>().GetModel();
                     if(parent_model)
                     {
@@ -248,7 +293,7 @@ public class MyPlayerController : MonoBehaviour
                     if(highlighted_vertex) {
                         if (dotted && highlighted_vertex.GetComponent<MyVertex>().GetWallManager() != null)
                         {
-                            Debug.Log("Drawing Dotted");
+                            UnityEngine.Debug.Log("Drawing Dotted");
                             lr.material = dotted_line;
                             lr.textureMode = LineTextureMode.Tile;
                             float width =  lr.startWidth;
@@ -260,6 +305,8 @@ public class MyPlayerController : MonoBehaviour
                         LM.controller = controller;
                         LM.threshold = threshold;
                         LM.rightControllerReference = rightControllerReference;
+                        UnityEngine.Debug.Log("right controller ref" + rightControllerReference + "confirmed");
+
 
                         line_attached = true;
                     }
@@ -408,44 +455,68 @@ public class MyPlayerController : MonoBehaviour
         WallManager parent_wall = chain[0].GetComponent<MyVertex>().GetWallManager();
         Model3D parent_model = chain[0].GetComponent<MyVertex>().GetModel();
         
-        //Vector3[] pos = new Vector3[chain.Count + 1];
         Vector3[] pos = new Vector3[chain.Count];
-        Debug.Log("Chain count: " + chain.Count);
+        UnityEngine.Debug.Log("Chain count: " + chain.Count);
         if (chain.Count == 1)
             return;
         for(int i = 0; i < chain.Count; i++)
         {
             pos[i] = chain[i].transform.position;
-            Debug.Log("Adding Vertex to pos: " + chain[i].transform.position);
+            UnityEngine.Debug.Log("Adding Vertex to pos: " + chain[i].transform.position);
         }
         //pos[chain.Count] = chain[0].transform.position;
-        LineRenderer lr;
-        GameObject go = new GameObject("LR holder");
-        lr = go.gameObject.AddComponent<LineRenderer>();
-        if(parent_model)
+        Vector3[] two_piece = new Vector3[2];
+        for (int i = 0; i < chain.Count - 1; i++)
         {
-            go.transform.parent = parent_model.transform;
-            lr.material = dotted ? dotted_line : projection_line;
-            go.tag = "p_line";
+            LineRenderer lr;
+            LineManager LM;
+            GameObject go = new GameObject("LR holder");
+            lr = go.gameObject.AddComponent<LineRenderer>();
+            LM = go.gameObject.AddComponent<LineManager>();
+            LM.controller = controller;
+            LM.threshold = threshold;
+            LM.rightControllerReference = rightControllerReference;
+            /*lr.controller = controller;
+            lr.threshold = threshold;
+            lr.rightControllerReference = rightControllerReference;*/
+            if (parent_model)
+            {
+                go.transform.parent = parent_model.transform;
+                lr.material = dotted ? dotted_line : projection_line;
+                go.tag = "p_line";
+            }
+            else if (parent_wall) {
+                go.transform.parent = parent_wall.transform;
+                lr.material = dotted ? dotted_line : wall_line;
+                go.tag = "w_line";
+            }
+            else {
+                go.transform.parent = gameObject.transform;
+                lr.material = dotted ? dotted_line : default_line;
+                go.tag = "p_line";
+            }
+            lr.startWidth = .01f;
+            lr.endWidth = .01f;
+            lr.positionCount = pos.Length;
+            UnityEngine.Debug.Log("Positions: " + String.Join(", ", new List<Vector3>(pos).ConvertAll(pos => pos.ToString()).ToArray()));
+            //lr.SetPositions(pos);
+            /*sitions[0] = pos[0];
+            positions[1] = pos[1];
+            lr.positionCount = positions.Length;
+            lr.SetPositions(positions);*/
+            UnityEngine.Debug.Log("Correct Pos is " + pos[i+1]);
+            two_piece[0] = pos[i];
+            two_piece[1] = pos[i+1];
+            go.gameObject.GetComponent<LineManager>().fromDraw = true;
+            go.gameObject.GetComponent<LineManager>().second_point = two_piece[0];
+            go.gameObject.GetComponent<LineManager>().second_point = two_piece[1];
+            lr.positionCount = two_piece.Length;
+            //break;
+            lr.SetPositions(two_piece);
         }
-        else if (parent_wall) {
-            go.transform.parent = parent_wall.transform;
-            lr.material = dotted ? dotted_line : wall_line;
-            go.tag = "w_line";
-        }
-        else {
-            go.transform.parent = gameObject.transform;
-            lr.material = dotted ? dotted_line : default_line;
-            go.tag = "p_line";
-        }
-        lr.startWidth = .01f;
-        lr.endWidth = .01f;
-        lr.positionCount = pos.Length;
-        Debug.Log("Positions: " + String.Join(", ", new List<Vector3>(pos).ConvertAll(pos => pos.ToString()).ToArray()));
-        lr.SetPositions(pos);
         if (dotted)
             {
-                Debug.Log("Drawing Dotted");
+                UnityEngine.Debug.Log("Drawing Dotted");
                 lr.textureMode = LineTextureMode.Tile;
                 float width =  lr.startWidth;
                 lr.material.SetTextureScale("_MainTex", new Vector2(0.5f/width, 1.0f));
@@ -491,7 +562,7 @@ public class MyPlayerController : MonoBehaviour
 
         foreach (var o in p_go)
         {
-            Debug.Log("Unrendering lines");
+            UnityEngine.Debug.Log("Unrendering lines");
             o.GetComponent<LineRenderer>().enabled = !rendered_proj_lines;
         }
         rendered_proj_lines = !rendered_proj_lines;
@@ -502,7 +573,7 @@ public class MyPlayerController : MonoBehaviour
 
         foreach (var o in p_go)
         {
-            Debug.Log("Unrendering lines");
+            UnityEngine.Debug.Log("Unrendering lines");
             o.GetComponent<LineRenderer>().enabled = !rendered_proj_lines;
         }
         rendered_proj_lines = !rendered_proj_lines;
