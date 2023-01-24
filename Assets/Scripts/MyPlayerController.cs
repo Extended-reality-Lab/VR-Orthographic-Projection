@@ -18,6 +18,7 @@ public class MyPlayerController : MonoBehaviour
     bool grabbing;
     GameObject highlighted_vertex = null;
     GameObject selected_line = null;
+    GameObject selected_line_draw = null;
     bool currentlyScaling;
 
     public WallManager[] walls;
@@ -110,6 +111,18 @@ public class MyPlayerController : MonoBehaviour
             selected_line = o;
         }
     }
+    public void setSelectedLineDrawn(GameObject o, bool b)
+    {
+        UnityEngine.Debug.Log("obj in question " + o);
+        if (!b)
+        {
+            selected_line_draw = null;
+        }
+        else
+        {
+            selected_line_draw = o;
+        }
+    }
 
     public void tryChain(InputAction.CallbackContext ctx) {
         if (ctx.action.actionMap.name == "XRI RightHand" && highlighted_vertex)
@@ -138,8 +151,12 @@ public class MyPlayerController : MonoBehaviour
                 }
             }
         }
+        if (ctx.action.actionMap.name == "XRI RightHand" && selected_line_draw)
+        {
+            Destroy(selected_line_draw);
+        }
         //UnityEngine.Debug.Log("Testing Button");
-       // UnityEngine.Debug.Log("Model Vertex " + highlighted_vertex.GetComponent<MyVertex>().onModel);
+        // UnityEngine.Debug.Log("Model Vertex " + highlighted_vertex.GetComponent<MyVertex>().onModel);
         if (ctx.action.actionMap.name == "XRI RightHand" && highlighted_vertex && highlighted_vertex.GetComponent<MyVertex>().onModel == false)
         {
             foreach (WallManager wall in walls)
@@ -488,10 +505,10 @@ public class MyPlayerController : MonoBehaviour
         for (int i = 0; i < chain.Count - 1; i++)
         {
             LineRenderer lr;
-            LineManager LM;
+            DrawnLines LM;
             GameObject go = new GameObject("LR holder");
             lr = go.gameObject.AddComponent<LineRenderer>();
-            LM = go.gameObject.AddComponent<LineManager>();
+            LM = go.gameObject.AddComponent<DrawnLines>();
             LM.controller = controller;
             LM.threshold = threshold;
             LM.rightControllerReference = rightControllerReference;
@@ -529,6 +546,7 @@ public class MyPlayerController : MonoBehaviour
             Vector3 direction = two_piece[1] - two_piece[0];
             float distance= two_piece[0].magnitude;
             LM.fromDraw = true;
+            LM.end_fromDraw = two_piece[0];
             LM.origin_fromDraw = two_piece[1];
             LM.direction_fromDraw = direction;
             LM.distance_fromDraw = distance;
