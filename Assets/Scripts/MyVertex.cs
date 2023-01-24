@@ -20,6 +20,7 @@ public class MyVertex : MonoBehaviour
     public bool selected;
     Model3D model = null;
     WallManager wall = null;
+    public List<LineManager> list_of_lines = new List<LineManager>();
 
     public Model3D GetModel() {
         return model;

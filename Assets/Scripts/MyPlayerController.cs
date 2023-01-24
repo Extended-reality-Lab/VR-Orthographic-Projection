@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 using System.Diagnostics;
+using System.Collections.Specialized;
 //using System.Diagnostics;
 //using System.Diagnostics;
 
@@ -126,9 +127,7 @@ public class MyPlayerController : MonoBehaviour
         if (ctx.action.actionMap.name == "XRI RightHand" && selected_line && selected_line.GetComponent<LineManager>().hit.collider.tag == "GameController")
         {
            // UnityEngine.Debug.Log("Added Vertex: " + selected_line.GetComponent<LineRenderer>().bounds);
-            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            //sphere.transform.position = selected_line.GetComponent<LineRenderer>().transform.position;
-            //sphere.transform.localScale = new Vector3(.1f, .1f, .1f);
+         
             if (Physics.Raycast(selected_line.transform.position, selected_line.transform.TransformDirection(selected_line.GetComponent<LineManager>().direction * selected_line.GetComponent<LineManager>().distance), out selected_line.GetComponent<LineManager>().hit, Mathf.Infinity, selected_line.GetComponent<LineManager>().layerMask))
             {
                 UnityEngine.Debug.Log("hit Data " + selected_line.GetComponent<LineManager>().hit.collider.tag);
@@ -152,6 +151,11 @@ public class MyPlayerController : MonoBehaviour
             }
             Model3D parent_model = active_v.GetComponent<MyVertex>().GetModel();
             Destroy(highlighted_vertex);
+            /*Trying to delete all lines attached to verticies*/
+            for (int i = 0; i < highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Count; i++)
+            {
+                Destroy(highlighted_vertex.GetComponent<MyVertex>().list_of_lines[i]);
+            }
         }
         //UnityEngine.Debug.Log("Testing Button");
         /*for(int point = 0; point<selected_line.positionCount; point++)
@@ -259,20 +263,36 @@ public class MyPlayerController : MonoBehaviour
             {
                 if (wall.can_spawn_vertex) {
                     Vector3 t_pos;
-                    if (highlighted_vertex) 
-                        t_pos = Snap(highlighted_vertex.transform.position, lineStart);
-                    else
-                        t_pos = Snap(wall.spawn_point, lineStart);
+                    Vector3 t_pos1;
+                    bool fromModel = true;
+                    LineManager LM = active_line.AddComponent<LineManager>();
+
                     Vector3[] positions = new Vector3[2];
                     positions[0] = lineStart;
+                    if (highlighted_vertex)
+                    {
+                        t_pos = Snap(highlighted_vertex.transform.position, lineStart);
+                        positions[1] = t_pos;
+                        //Only working for lines not originating from model, and if delete from origin vertex, then vertex at end of line cannot be deleted
+                        highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Add(LM);
+                    }
+                    else
+                    {
+                        t_pos = Snap(wall.spawn_point, lineStart);
+                        fromModel = false;
+                        //Attaching line to vertex at the end of the line
+                        positions[1] = wall.makeV(t_pos, LM);
+                        //highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Add(LM);
+                        //positions[1] = wall.makeV(t_pos1);
+                    }
                     //iterate through the list and check if a vertex at t_pos already exists
                     //if not, then create the vertex
                     //else continue
-                    positions[1] = wall.makeV(t_pos);
+                    //positions[1] = wall.makeV(t_pos);
                     WallManager parent_wall = active_v.GetComponent<MyVertex>().GetWallManager();
-                    /*parent_wall = wall.GetComponent<WallManager>();
+                    parent_wall = wall.GetComponent<WallManager>();
                     UnityEngine.Debug.Log("STOP THE COUNT" + parent_wall.rendered_vertices.Count);
-                    for(int i = 0; i < parent_wall.rendered_vertices.Count; i++)
+                    /*for(int i = 0; i < parent_wall.rendered_vertices.Count; i++)
                     {
                         UnityEngine.Debug.Log("Congrats you played yourself" + parent_wall.rendered_vertices[i].transform.position);
                         if(parent_wall.rendered_vertices[i].transform.position == t_pos)
@@ -301,7 +321,6 @@ public class MyPlayerController : MonoBehaviour
                         }
                     }
                     if (active_line) {
-                        LineManager LM = active_line.AddComponent<LineManager>();
                         LM.controller = controller;
                         LM.threshold = threshold;
                         LM.rightControllerReference = rightControllerReference;
@@ -507,9 +526,12 @@ public class MyPlayerController : MonoBehaviour
             UnityEngine.Debug.Log("Correct Pos is " + pos[i+1]);
             two_piece[0] = pos[i];
             two_piece[1] = pos[i+1];
-            go.gameObject.GetComponent<LineManager>().fromDraw = true;
-            go.gameObject.GetComponent<LineManager>().second_point = two_piece[0];
-            go.gameObject.GetComponent<LineManager>().second_point = two_piece[1];
+            Vector3 direction = two_piece[1] - two_piece[0];
+            float distance= two_piece[0].magnitude;
+            LM.fromDraw = true;
+            LM.origin_fromDraw = two_piece[1];
+            LM.direction_fromDraw = direction;
+            LM.distance_fromDraw = distance;
             lr.positionCount = two_piece.Length;
             //break;
             lr.SetPositions(two_piece);

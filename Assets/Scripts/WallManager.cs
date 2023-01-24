@@ -20,7 +20,7 @@ public class WallManager : MonoBehaviour
 
     public int depth_axis;
     public List<GameObject> rendered_vertices = new List<GameObject>();
-    public List<MyVertex> list_of_vertices = new List<MyVertex>();
+    public List<LineManager> list_of_lines = new List<LineManager>();
     // Update is called once per frame
 
     /*
@@ -81,7 +81,7 @@ public class WallManager : MonoBehaviour
         } 
     }
     //generate a list, and every time MakeV is called, add the vertex to the list
-    public Vector3 makeV(Vector3 pos)
+    public Vector3 makeV(Vector3 pos, LineManager LM)
     {
         Debug.Log("Spawning Vertex");
         GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -99,8 +99,8 @@ public class WallManager : MonoBehaviour
         mref.default_mat = default_mat;
         mref.highlight_mat = highlight_mat;
         mref.SetWall(gameObject.GetComponent<WallManager>());
+        //mref.list_of_lines.Add(LM);
         rendered_vertices.Add(myVert);
-        list_of_vertices.Add(mref);
         Destroy(temp);
         return n_pos;
     }

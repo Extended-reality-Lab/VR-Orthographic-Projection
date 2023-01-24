@@ -18,17 +18,20 @@ public class LineManager : MonoBehaviour
     public EdgeCollider2D edgeCollider;
     public GameObject rightControllerReference;
     public bool touchingLine;
-    public bool fromDraw;
+    public bool fromDraw = false;
     public RaycastHit hit;
     bool RinSelectableRange;
     public float threshold;
     public MyPlayerController controller;
 
     public Vector3 origin;
+    public Vector3 origin_fromDraw;
     public Vector3 direction;
+    public Vector3 direction_fromDraw;
     public Vector3 first_point;
     public Vector3 second_point;
     public float distance;
+    public float distance_fromDraw;
     public int layerMask;
 
     // Start is called before the first frame updat
@@ -45,14 +48,14 @@ public class LineManager : MonoBehaviour
         Vector3[] positions = new Vector3[2];
         lr.GetPositions(positions);
         positions[0] = gameObject.transform.position;
-        if(fromDraw == true)
+        /*if (fromDraw == true)
         {
             UnityEngine.Debug.Log("yeeeeeeeeeeeeeeeeeeeeeeeeeee");
             positions[0] = first_point;
-            positions[1] = second_point;
+            positions[1] = lr.GetPosition(lr.positionCount - 1);
             UnityEngine.Debug.Log("Incorrect Pos is " + second_point);
-        }
-        fromDraw = false;
+            lr.SetPosition(1, second_point);
+        }*/
         lr.positionCount = positions.Length;
         //With this lines can be deleted, but the second point is in narnia
         //Without the lines are correct, but cant be deleted
@@ -70,6 +73,14 @@ public class LineManager : MonoBehaviour
             origin = positions[i - 1];
             direction = positions[i] - origin;
             distance = origin.magnitude;
+            if (fromDraw == true)
+            {
+                origin = origin_fromDraw;
+                direction = direction_fromDraw;
+                distance = distance_fromDraw;
+            }
+
+
             //UnityEngine.Debug.Log("origin " + origin);
             //UnityEngine.Debug.Log("direction " + direction); 
             //UnityEngine.Debug.Log("dis " + distance);
