@@ -21,7 +21,7 @@ public class MyVertex : MonoBehaviour
     Model3D model = null;
     WallManager wall = null;
     public List<LineManager> list_of_lines = new List<LineManager>();
-
+    public float key;
     public Model3D GetModel() {
         return model;
     }
@@ -43,6 +43,8 @@ public class MyVertex : MonoBehaviour
         r = GetComponent<MeshRenderer>();
         if(!selected)
             r.material = default_mat;  
+
+        key = UnityEngine.Random.Range(1, 100000);
     }
 
     // Update is called once per frame

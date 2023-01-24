@@ -87,10 +87,12 @@ public class WallManager : MonoBehaviour
         GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         GameObject myVert = GameObject.Instantiate(temp);
         myVert.tag = "wall_item";
+        //AdjacencyList AL;
         Vector3 n_pos = pos;
         myVert.transform.position = n_pos;
         myVert.transform.localScale = new Vector3(.015f,.015f,.015f);
         MyVertex mref = myVert.AddComponent<MyVertex>();
+       // AL = myVert.AddComponent<AdjacencyList>(mref.key);
         mref.controller = controller;
         mref.rightControllerReference = rightControllerReference;
         Debug.Log("right controller ref in wall manager" + rightControllerReference + " confirmed");

@@ -14,7 +14,7 @@ public class MyPlayerController : MonoBehaviour
     public GameObject model = null;
     GrabStatusEnum GrabStatus;
     bool selecting = false;
-
+    bool fromModel = true;
     bool grabbing;
     GameObject highlighted_vertex = null;
     GameObject selected_line = null;
@@ -208,7 +208,8 @@ public class MyPlayerController : MonoBehaviour
                 lr.endWidth = .01f;
                 lrs.material = projection_line_p;
                 lrs.startWidth = .01f;
-                lrs.endWidth = .01f;      
+                lrs.endWidth = .01f;
+                fromModel = true;
             }
             else if (highlighted_vertex.GetComponent<MyVertex>().GetWallManager() != null) {
                 lr.material = wall_line;
@@ -216,7 +217,8 @@ public class MyPlayerController : MonoBehaviour
                 lr.endWidth = .01f;
                 lrs.material = wall_line_p; 
                 lrs.startWidth = .01f;
-                lrs.endWidth = .01f;       
+                lrs.endWidth = .01f;
+                fromModel = false;
             }
             else {
                 lr.material = default_line;
@@ -281,7 +283,6 @@ public class MyPlayerController : MonoBehaviour
                 if (wall.can_spawn_vertex) {
                     Vector3 t_pos;
                     Vector3 t_pos1;
-                    bool fromModel = true;
                     LineManager LM = active_line.AddComponent<LineManager>();
 
                     Vector3[] positions = new Vector3[2];
@@ -292,10 +293,18 @@ public class MyPlayerController : MonoBehaviour
                         positions[1] = t_pos;
                         //Only working for lines not originating from model, and if delete from origin vertex, then vertex at end of line cannot be deleted
                         highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Add(LM);
+                        //Add vertex key to 
                     }
                     else
                     {
-                        t_pos = Snap(wall.spawn_point, lineStart);
+                        if(fromModel == true)
+                        {
+                            t_pos = Snap(wall.spawn_point, lineStart);
+                        }
+                        else
+                        {
+                            t_pos = rightControllerReference.transform.position;
+                        }
                         fromModel = false;
                         //Attaching line to vertex at the end of the line
                         positions[1] = wall.makeV(t_pos, LM);
