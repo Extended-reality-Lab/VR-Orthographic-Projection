@@ -10,6 +10,7 @@ public class MyVertex : MonoBehaviour
     public GameObject rightControllerReference;
     public float threshold;
     public bool onModel;
+    public bool snappedVertex;
     bool RinSelectableRange;
     bool LinSelectableRange;
     public MyPlayerController controller;

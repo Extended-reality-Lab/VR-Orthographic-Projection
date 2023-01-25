@@ -81,7 +81,7 @@ public class WallManager : MonoBehaviour
         } 
     }
     //generate a list, and every time MakeV is called, add the vertex to the list
-    public Vector3 makeV(Vector3 pos, LineManager LM)
+    public Vector3 makeV(Vector3 pos, LineManager LM, bool snappedVertex)
     {
         Debug.Log("Spawning Vertex");
         GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -100,6 +100,7 @@ public class WallManager : MonoBehaviour
         mref.threshold = threshold;
         mref.default_mat = default_mat;
         mref.highlight_mat = highlight_mat;
+        mref.snappedVertex = snappedVertex;
         mref.SetWall(gameObject.GetComponent<WallManager>());
         //mref.list_of_lines.Add(LM);
         rendered_vertices.Add(myVert);
