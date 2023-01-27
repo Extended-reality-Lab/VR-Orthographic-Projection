@@ -87,7 +87,7 @@ public class LineManager : MonoBehaviour
                 //UnityEngine.Debug.Log("hit Data " + hit.collider.tag);
                 if(hit.collider.tag == "GameController")
                 {
-                    //UnityEngine.Debug.Log("REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+                    //UnityEngine.Debug.Log("WERE GOING DOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWN");
                     touchingLine= true;
                     RinSelectableRange = true;
                     break;
@@ -98,12 +98,12 @@ public class LineManager : MonoBehaviour
         UnityEngine.Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 50, Color.white);
         UnityEngine.Debug.DrawLine(origin, new Vector3(5, 0, 0), Color.white, 2.5f);*/
         //UnityEngine.Debug.Log(Vector3.Distance(gameObject.transform.position, rightControllerReference.transform.position));
-        if (Vector3.Distance(gameObject.transform.position, rightControllerReference.transform.position) < threshold)
+        /*if (Vector3.Distance(gameObject.transform.position, rightControllerReference.transform.position) < threshold)
         {
             UnityEngine.Debug.Log("Start Collision with controller REEEEEEEEEEEEEEEEEEEEEEE");
             RinSelectableRange = true;
             break;
-        }
+        }*/
 
         }
 

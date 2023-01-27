@@ -1,30 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using System;
+using System.Diagnostics;
+using System.Collections.Specialized;
 
-public class AdjacencyList<K>
+public class AdjacencyList<T> : MonoBehaviour
 {
-    private List<List<K>> _vertexList = new List<List<K>>();
-    private Dictionary<K, List<K>> _vertexDict = new Dictionary<K, List<K>>();
+    private List<List<T>> _vertexList = new List<List<T>>();
+    private Dictionary<T, List<T>> _vertexDict = new Dictionary<T, List<T>>();
 
-    public AdjacencyList(K rootVertexKey)
+    public AdjacencyList(T rootVertexKey)
     {
         AddVertex(rootVertexKey);
     }
 
-    private List<K> AddVertex(K key)
+    public List<T> AddVertex(T key)
     {
-        List<K> vertex = new List<K>();
+        List<T> vertex = new List<T>();
         _vertexList.Add(vertex);
         _vertexDict.Add(key, vertex);
 
         return vertex;
     }
 
-    public void AddEdge(K startKey, K endKey)
+    public void AddEdge(T startKey, T endKey)
     {
-        List<K> startVertex = _vertexDict.ContainsKey(startKey) ? _vertexDict[startKey] : null;
-        List<K> endVertex = _vertexDict.ContainsKey(endKey) ? _vertexDict[endKey] : null;
+        List<T> startVertex = _vertexDict.ContainsKey(startKey) ? _vertexDict[startKey] : null;
+        List<T> endVertex = _vertexDict.ContainsKey(endKey) ? _vertexDict[endKey] : null;
 
         if (startVertex == null)
             throw new ArgumentException("Cannot create edge from a non-existent start vertex.");
@@ -36,15 +40,15 @@ public class AdjacencyList<K>
         endVertex.Add(startKey);
     }
 
-    public void RemoveVertex(K key)
+    public void RemoveVertex(T key)
     {
-        List<K> vertex = _vertexDict[key];
+        List<T> vertex = _vertexDict[key];
 
         //First remove the edges / adjacency entries
         int vertexNumAdjacent = vertex.Count;
         for (int i = 0; i < vertexNumAdjacent; i++)
         {
-            K neighbourVertexKey = vertex[i];
+            T neighbourVertexKey = vertex[i];
             RemoveEdge(key, neighbourVertexKey);
         }
 
@@ -53,18 +57,18 @@ public class AdjacencyList<K>
         _vertexDict.Remove(key);
     }
 
-    public void RemoveEdge(K startKey, K endKey)
+    public void RemoveEdge(T startKey, T endKey)
     {
-        ((List<K>)_vertexDict[startKey]).Remove(endKey);
-        ((List<K>)_vertexDict[endKey]).Remove(startKey);
+        ((List<T>)_vertexDict[startKey]).Remove(endKey);
+        ((List<T>)_vertexDict[endKey]).Remove(startKey);
     }
 
-    public bool Contains(K key)
+    public bool Contains(T key)
     {
         return _vertexDict.ContainsKey(key);
     }
 
-    public int VertexDegree(K key)
+    public int VertexDegree(T key)
     {
         return _vertexDict[key].Count;
     }

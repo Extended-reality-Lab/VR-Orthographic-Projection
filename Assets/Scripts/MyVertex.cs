@@ -11,6 +11,7 @@ public class MyVertex : MonoBehaviour
     public float threshold;
     public bool onModel;
     public bool snappedVertex;
+    public bool freeRange;
     bool RinSelectableRange;
     bool LinSelectableRange;
     public MyPlayerController controller;
@@ -22,7 +23,7 @@ public class MyVertex : MonoBehaviour
     Model3D model = null;
     WallManager wall = null;
     public List<LineManager> list_of_lines = new List<LineManager>();
-    public float key;
+    public int key;
     public Model3D GetModel() {
         return model;
     }

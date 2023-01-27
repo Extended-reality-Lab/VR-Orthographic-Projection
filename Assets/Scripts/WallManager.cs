@@ -81,18 +81,21 @@ public class WallManager : MonoBehaviour
         } 
     }
     //generate a list, and every time MakeV is called, add the vertex to the list
-    public Vector3 makeV(Vector3 pos, LineManager LM, bool snappedVertex)
+    public Vector3 makeV(Vector3 pos, LineManager LM, bool snappedVertex, bool freeRange, ref int dest_key)
     {
         Debug.Log("Spawning Vertex");
         GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         GameObject myVert = GameObject.Instantiate(temp);
+        Destroy(temp);
         myVert.tag = "wall_item";
-        //AdjacencyList AL;
+        AdjacencyList<int> AL;
         Vector3 n_pos = pos;
         myVert.transform.position = n_pos;
         myVert.transform.localScale = new Vector3(.015f,.015f,.015f);
         MyVertex mref = myVert.AddComponent<MyVertex>();
-       // AL = myVert.AddComponent<AdjacencyList>(mref.key);
+        AL = myVert.AddComponent<AdjacencyList<int>>();
+        //AL.AddVertex(mref.key);
+        dest_key = mref.key;
         mref.controller = controller;
         mref.rightControllerReference = rightControllerReference;
         Debug.Log("right controller ref in wall manager" + rightControllerReference + " confirmed");
@@ -101,10 +104,11 @@ public class WallManager : MonoBehaviour
         mref.default_mat = default_mat;
         mref.highlight_mat = highlight_mat;
         mref.snappedVertex = snappedVertex;
+        mref.freeRange = freeRange;
         mref.SetWall(gameObject.GetComponent<WallManager>());
         //mref.list_of_lines.Add(LM);
         rendered_vertices.Add(myVert);
-        Destroy(temp);
+        //Destroy(temp);
         return n_pos;
     }
 

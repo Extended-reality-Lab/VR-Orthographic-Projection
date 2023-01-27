@@ -15,6 +15,7 @@ public class MyPlayerController : MonoBehaviour
     GrabStatusEnum GrabStatus;
     bool selecting = false;
     bool fromModel = true;
+    bool freeRange;
     bool grabbing;
     GameObject highlighted_vertex = null;
     GameObject selected_line = null;
@@ -35,6 +36,7 @@ public class MyPlayerController : MonoBehaviour
     public GameObject ControllerLeft;
     public GameObject ControllerRight;
     GameObject StartVert;
+    GameObject list;
     LineRenderer lr;
     LineRenderer lrs;
 
@@ -55,6 +57,7 @@ public class MyPlayerController : MonoBehaviour
     public GameObject ton;
     public GameObject toff;
     public float threshold;
+    public int dest_key;
     public GameObject rightControllerReference;
     public MyPlayerController controller;
     GameObject active_v;
@@ -160,20 +163,21 @@ public class MyPlayerController : MonoBehaviour
         // UnityEngine.Debug.Log("Model Vertex " + highlighted_vertex.GetComponent<MyVertex>().onModel);
         if (ctx.action.actionMap.name == "XRI RightHand" && highlighted_vertex && highlighted_vertex.GetComponent<MyVertex>().onModel == false)
         {
-            foreach (WallManager wall in walls)
+            UnityEngine.Debug.Log("I WILL FINISH WHAT YOU STARTEDDDDDDDDDDDDDDDDDDDDDD");
+            /*foreach (WallManager wall in walls)
             {
                 WallManager parent_wall = active_v.GetComponent<MyVertex>().GetWallManager();
                 parent_wall = wall.GetComponent<WallManager>();
                 parent_wall.rendered_vertices.Remove(highlighted_vertex);
                 UnityEngine.Debug.Log("STOP THE COUNT FOR REAL" + parent_wall.rendered_vertices.Count);
-            }
-            Model3D parent_model = active_v.GetComponent<MyVertex>().GetModel();
+            }*/
+            //Model3D parent_model = active_v.GetComponent<MyVertex>().GetModel();
             Destroy(highlighted_vertex);
             /*Trying to delete all lines attached to verticies*/
-            for (int i = 0; i < highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Count; i++)
+            /*for (int i = 0; i < highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Count; i++)
             {
                 Destroy(highlighted_vertex.GetComponent<MyVertex>().list_of_lines[i]);
-            }
+            }*/
         }
         //UnityEngine.Debug.Log("Testing Button");
         /*for(int point = 0; point<selected_line.positionCount; point++)
@@ -276,6 +280,7 @@ public class MyPlayerController : MonoBehaviour
         //check if line is close enough to wall
         //check if line is close enough to snap
         //generate vertex at line end
+        UnityEngine.Debug.Log("Trying to release");
         if (ctx.action.actionMap.name == "XRI RightHand" && selecting)
         {
             bool line_attached = false;
@@ -286,7 +291,8 @@ public class MyPlayerController : MonoBehaviour
                     Vector3 t_pos;
                     Vector3 t_pos1;
                     LineManager LM = active_line.AddComponent<LineManager>();
-                    
+                    //AdjacencyList<int> AL;
+                    //AL = list.AddComponent<AdjacencyList<int>>();
 
                     Vector3[] positions = new Vector3[2];
                     positions[0] = lineStart;
@@ -294,7 +300,7 @@ public class MyPlayerController : MonoBehaviour
                     WallManager parent_wall = active_v.GetComponent<MyVertex>().GetWallManager();
                     parent_wall = wall.GetComponent<WallManager>();
                     UnityEngine.Debug.Log("STOP THE COUNT" + parent_wall.rendered_vertices.Count);
-                    for (int i = 0; i < parent_wall.rendered_vertices.Count; i++)
+                    /*for (int i = 0; i < parent_wall.rendered_vertices.Count; i++)
                     {
                         UnityEngine.Debug.Log("Congrats you played yourself" + parent_wall.rendered_vertices[i].transform.position);
                         if (parent_wall.rendered_vertices[i].transform.position == lineStart)
@@ -302,37 +308,68 @@ public class MyPlayerController : MonoBehaviour
                             UnityEngine.Debug.Log("REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
                             StartVert = parent_wall.rendered_vertices[i];
                         }
-                    }
+                    }*/
+                    //UnityEngine.Debug.Log("Start Vertex Key" + StartVert.GetComponent<MyVertex>().key);
                     //check highlighted vertex and if vertex at pos[0], snapped_vertex is set to false
                     //StartVert.GetComponent<MyVertex>().snappedVertex == true
-                    if (highlighted_vertex && StartVert.GetComponent<MyVertex>().snappedVertex == true)
+                    // && StartVert.GetComponent<MyVertex>().snappedVertex == true && highlighted_vertex.GetComponent<MyVertex>().freeRange == false
+
+                    //need a check to see if it a line on the wall.
+                    if (highlighted_vertex)
                     {
-                        t_pos = Snap(highlighted_vertex.transform.position, lineStart);
+                        t_pos = highlighted_vertex.transform.position;
                         positions[1] = t_pos;
                         //Only working for lines not originating from model, and if delete from origin vertex, then vertex at end of line cannot be deleted
-                        highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Add(LM);
+                        //highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Add(LM);
+                        UnityEngine.Debug.Log("first snap");
+                        //if vertex already exists
+                        //UnityEngine.Debug.Log("highlight Vertex Key" + highlighted_vertex.GetComponent<MyVertex>().key);
+                        //AL.AddEdge(StartVert.GetComponent<MyVertex>().key, highlighted_vertex.GetComponent<MyVertex>().key);
                         //Add vertex key to 
+
                     }
-                    else
+                    else if (fromModel)
                     {
+                        //only do this if line is originating from wall
                         t_pos = Snap(wall.spawn_point, lineStart);
-                    
-                        if (fromModel == true)
+                        positions[1] = wall.makeV(t_pos, LM, true, false, ref dest_key);
+                        UnityEngine.Debug.Log("second snap");
+                        //line is from a vertex that was generated via a line from the model
+                        /*if (fromModel == true)
                         {
+                            
+/
                             t_pos = Snap(wall.spawn_point, lineStart);
-                            positions[1] = wall.makeV(t_pos, LM, true);
+                            positions[1] = wall.makeV(t_pos, LM, true, false, ref dest_key);
+                            UnityEngine.Debug.Log("second snap");
+                            //UnityEngine.Debug.Log("dest Vertex Key" + dest_key);
                             //snapped_vertex = true
                         }
                         else
                         {
                             t_pos = rightControllerReference.transform.position;
-                            positions[1] = wall.makeV(t_pos, LM, false);
+                            if (highlighted_vertex)
+                            {
+                                positions[1] = highlighted_vertex.transform.position;
+                            }
+                            else
+                            {
+                                positions[1] = wall.makeV(t_pos, LM, false, true, ref dest_key);
+                                UnityEngine.Debug.Log("dest Vertex Key" + dest_key);
+                            }
+                           
                             //snapped_vertex = false
                         }
                         fromModel = false;
                         //Attaching line to vertex at the end of the line
                         //highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Add(LM);
-                        //positions[1] = wall.makeV(t_pos1);
+                        //positions[1] = wall.makeV(t_pos1);*/
+                        fromModel = false;
+                    }
+                    else
+                    {
+                        line_attached = false; 
+                        break;
                     }
                     //positions[1] = wall.makeV(t_pos, LM, false);
                     /*if(fromModel == false)
@@ -342,21 +379,6 @@ public class MyPlayerController : MonoBehaviour
                     else
                     {
                         t_pos = Snap(wall.spawn_point, lineStart);
-                    }*/
-                    //iterate through the list and check if a vertex at t_pos already exists
-                    //if not, then create the vertex
-                    //else continue
-                    //positions[1] = wall.makeV(t_pos);
-                    /*WallManager parent_wall = active_v.GetComponent<MyVertex>().GetWallManager();
-                    parent_wall = wall.GetComponent<WallManager>();
-                    UnityEngine.Debug.Log("STOP THE COUNT" + parent_wall.rendered_vertices.Count);
-                    for(int i = 0; i < parent_wall.rendered_vertices.Count; i++)
-                    {
-                        UnityEngine.Debug.Log("Congrats you played yourself" + parent_wall.rendered_vertices[i].transform.position);
-                        if(parent_wall.rendered_vertices[i].transform.position == lineStart)
-                        {
-                            UnityEngine.Debug.Log("REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-                        }
                     }*/
                     Model3D parent_model = active_v.GetComponent<MyVertex>().GetModel();
                     if(parent_model)
