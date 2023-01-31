@@ -87,7 +87,7 @@ public class LineManager : MonoBehaviour
                 //UnityEngine.Debug.Log("hit Data " + hit.collider.tag);
                 if(hit.collider.tag == "GameController")
                 {
-                    //UnityEngine.Debug.Log("WERE GOING DOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWN");
+                    UnityEngine.Debug.Log("WERE GOING DOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWN");
                     touchingLine= true;
                     RinSelectableRange = true;
                     break;

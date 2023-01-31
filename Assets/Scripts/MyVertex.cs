@@ -54,7 +54,7 @@ public class MyVertex : MonoBehaviour
     {
         bool Rtemp = RinSelectableRange;
 
-        RinSelectableRange = Vector3.Distance(gameObject.transform.position, rightControllerReference.transform.position) < threshold; 
+        RinSelectableRange = Vector3.Distance(gameObject.transform.position, rightControllerReference.transform.position) < 0.01; 
 
         //depends on previous and current frame 
         if ((RinSelectableRange && !Rtemp)) {

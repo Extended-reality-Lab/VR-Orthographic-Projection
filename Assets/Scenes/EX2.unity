@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3358407, g: 0.6986731, b: 0.8935488, a: 1}
+  m_IndirectSpecularColor: {r: 0.33616567, g: 0.70076025, b: 0.8920603, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -668,6 +668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightControllerReference: {fileID: 64708064}
   threshold: 0.01
+  onModel: 0
   controller: {fileID: 945862343}
   highlight_mat: {fileID: 2100000, guid: 027726a0a3063014681c05802373bd83, type: 2}
   default_mat: {fileID: 2100000, guid: 9e9a8b53b7f709c4b9b107947581c4e4, type: 2}
@@ -676,6 +677,7 @@ MonoBehaviour:
   spawn_point: {x: 0, y: 0, z: 0}
   depth_axis: 1
   rendered_vertices: []
+  list_of_lines: []
 --- !u!54 &182850401
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2909,11 +2911,16 @@ MonoBehaviour:
   dotted_line: {fileID: 2100000, guid: 191cb7a24f6235749ba5f634d83e0432, type: 2}
   ton: {fileID: 1449521601}
   toff: {fileID: 48720461}
+  threshold: 0
+  dest_key: 0
+  rightControllerReference: {fileID: 64708064}
+  controller: {fileID: 945862343}
   freeze: 0
   leftGrab: {fileID: -1129433818936076581, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightGrab: {fileID: 5953054348715916520, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightTrigger: {fileID: 6628925328003034467, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightPrimary: {fileID: -1138388115906915927, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  rightSecondary: {fileID: 7720840037730027672, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   chain: []
 --- !u!114 &945862344
 MonoBehaviour:
@@ -5267,6 +5274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightControllerReference: {fileID: 64708064}
   threshold: 0.01
+  onModel: 0
   controller: {fileID: 945862343}
   highlight_mat: {fileID: 2100000, guid: 027726a0a3063014681c05802373bd83, type: 2}
   default_mat: {fileID: 2100000, guid: 9e9a8b53b7f709c4b9b107947581c4e4, type: 2}
@@ -5275,6 +5283,7 @@ MonoBehaviour:
   spawn_point: {x: 0, y: 0, z: 0}
   depth_axis: 0
   rendered_vertices: []
+  list_of_lines: []
 --- !u!54 &1406577264
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6367,6 +6376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightControllerReference: {fileID: 64708064}
   threshold: 0.01
+  onModel: 0
   controller: {fileID: 945862343}
   highlight_mat: {fileID: 2100000, guid: 027726a0a3063014681c05802373bd83, type: 2}
   default_mat: {fileID: 2100000, guid: 9e9a8b53b7f709c4b9b107947581c4e4, type: 2}
@@ -6375,6 +6385,7 @@ MonoBehaviour:
   spawn_point: {x: 0, y: 0, z: 0}
   depth_axis: 2
   rendered_vertices: []
+  list_of_lines: []
 --- !u!54 &1683452361
 Rigidbody:
   m_ObjectHideFlags: 0
