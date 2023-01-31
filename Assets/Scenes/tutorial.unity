@@ -4323,8 +4323,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'The three coloed walls represent different sides of model''s projection.
-    Mint for Top, Blue for Left, Purple for Right. '
+  m_Text: 'The three colored walls represent different sides of model''s projection.
+    Mint for Top, Blue for Left, and Purple for Right. '
 --- !u!222 &528255328
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8546,7 +8546,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You can toggle on/off lines under "Drawing" tab to reduce visual clutter
+  m_Text: You can toggle on/off lines under the "Drawing" tab to reduce visual clutter
     while drawing a lot of lines.
 --- !u!222 &1249517729
 CanvasRenderer:
@@ -13768,7 +13768,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: You can use the controller's grip buttons to move and resize the mode.
-    The position and scale of the model with be locked once you begin drawing lines.
+    The position and scale of the model will be locked once you begin drawing lines.
 --- !u!222 &2062295779
 CanvasRenderer:
   m_ObjectHideFlags: 0
