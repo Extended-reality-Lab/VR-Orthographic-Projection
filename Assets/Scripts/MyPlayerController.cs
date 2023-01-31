@@ -215,15 +215,17 @@ public class MyPlayerController : MonoBehaviour
                 lrs.startWidth = .01f;
                 lrs.endWidth = .01f;
                 fromModel = true;
+
             }
             else if (highlighted_vertex.GetComponent<MyVertex>().GetWallManager() != null) {
                 lr.material = wall_line;
                 lr.startWidth = .01f;
                 lr.endWidth = .01f;
                 lrs.material = wall_line_p; 
-                lrs.startWidth = .01f;
-                lrs.endWidth = .01f;
+                lrs.startWidth = .0f;
+                lrs.endWidth = .0f;
                 fromModel = false;
+                
             }
             else {
                 lr.material = default_line;
@@ -233,6 +235,7 @@ public class MyPlayerController : MonoBehaviour
                 lrs.startWidth = .01f;
                 lrs.endWidth = .01f;
                 fromModel = false;
+                
             }
 
             Vector3[] positions = new Vector3[2];
@@ -300,6 +303,7 @@ public class MyPlayerController : MonoBehaviour
                     WallManager parent_wall = active_v.GetComponent<MyVertex>().GetWallManager();
                     parent_wall = wall.GetComponent<WallManager>();
                     UnityEngine.Debug.Log("STOP THE COUNT" + parent_wall.rendered_vertices.Count);
+                   
                     /*for (int i = 0; i < parent_wall.rendered_vertices.Count; i++)
                     {
                         UnityEngine.Debug.Log("Congrats you played yourself" + parent_wall.rendered_vertices[i].transform.position);
