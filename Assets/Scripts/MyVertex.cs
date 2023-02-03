@@ -12,6 +12,7 @@ public class MyVertex : MonoBehaviour
     public bool onModel;
     public bool snappedVertex;
     public bool freeRange;
+    public bool curved;
     bool RinSelectableRange;
     bool LinSelectableRange;
     public MyPlayerController controller;
@@ -82,5 +83,10 @@ public class MyVertex : MonoBehaviour
     public (bool,bool) getSelectable()
     {
         return (RinSelectableRange, LinSelectableRange);
+    }
+
+    public List<LineManager> connectedLines()
+    {
+        return list_of_lines;
     }
 }

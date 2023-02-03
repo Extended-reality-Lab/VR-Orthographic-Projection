@@ -1169,6 +1169,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 0}
+  start_key: 0
+  end_key: 0
   walls:
   - {fileID: 1362036358}
   - {fileID: 2105718249}
@@ -1195,6 +1197,8 @@ MonoBehaviour:
   rightPrimary: {fileID: -1138388115906915927, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightSecondary: {fileID: 7720840037730027672, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   chain: []
+  curve: []
+  curved: 0
 --- !u!114 &142376163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8049,9 +8053,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: For models with curves, construct the curve by projecting each vertex in
-    the curve. You can also "sketch out" a rough outline of the curve by selecting
-    just a few of the vertices.
+  m_Text: 'You can draw curved lines by selecting vertices on the model using the
+    A button. Draw a line from a selected vertex to the wall. Lines from all selected
+    vertices will be drawn to the wall. '
 --- !u!222 &947507933
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16440,7 +16444,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2108095590}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: a89f14b4dac79de4cbcfc9ec33fb212f, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 20627aae40e0e734bb6687e39c48fa28, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -16453,14 +16457,12 @@ VideoPlayer:
   m_DataSource: 0
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
-  m_TargetAudioSources:
-  - {fileID: 0}
-  m_DirectAudioVolumes:
-  - 1
+  m_TargetAudioSources: []
+  m_DirectAudioVolumes: []
   m_Url: 
-  m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
-  m_ControlledAudioTrackCount: 1
+  m_EnabledAudioTracks: 
+  m_DirectAudioMutes: 
+  m_ControlledAudioTrackCount: 0
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 1
@@ -16477,7 +16479,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300001, guid: 1dd706bb85d8aef4e83a6229dbd62c36, type: 2}
-  m_audioClip: {fileID: 8300000, guid: a37a2bf33588a0c45a00ea2b9f45c7d5, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 19a774700f850984b8669df954dccbc7, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

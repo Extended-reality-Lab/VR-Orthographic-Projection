@@ -95,7 +95,7 @@ public class WallManager : MonoBehaviour
         MyVertex mref = myVert.AddComponent<MyVertex>();
         AL = myVert.AddComponent<AdjacencyList<int>>();
         //AL.AddVertex(mref.key);
-        dest_key = mref.key;
+        mref.key = dest_key;
         mref.controller = controller;
         mref.rightControllerReference = rightControllerReference;
         Debug.Log("right controller ref in wall manager" + rightControllerReference + " confirmed");
@@ -106,7 +106,7 @@ public class WallManager : MonoBehaviour
         mref.snappedVertex = snappedVertex;
         mref.freeRange = freeRange;
         mref.SetWall(gameObject.GetComponent<WallManager>());
-        //mref.list_of_lines.Add(LM);
+        mref.list_of_lines.Add(LM);
         rendered_vertices.Add(myVert);
         //Destroy(temp);
         return n_pos;

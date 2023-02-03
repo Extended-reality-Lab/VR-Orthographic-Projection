@@ -20,6 +20,9 @@ public class MyPlayerController : MonoBehaviour
     GameObject highlighted_vertex = null;
     GameObject selected_line = null;
     GameObject selected_line_draw = null;
+    AdjacencyList<int> AL;
+    public int start_key;
+    public int end_key;
     bool currentlyScaling;
 
     public WallManager[] walls;
@@ -73,6 +76,8 @@ public class MyPlayerController : MonoBehaviour
     public InputActionReference rightPrimary;
     public InputActionReference rightSecondary;
     public List<GameObject> chain = new List<GameObject>();
+    public List<GameObject> curve = new List<GameObject>();
+    public bool curved;
 
     private void Start() {
         leftGrab.action.started += StartGrabGraph;
@@ -85,6 +90,7 @@ public class MyPlayerController : MonoBehaviour
         rightTrigger.action.started += trySelect;
         // leftTrigger.action.canceled += tryRelease;
         rightTrigger.action.canceled += tryRelease;
+        rightPrimary.action.started += tryCurve;
         rightPrimary.action.started += tryChain;
         rightSecondary.action.started += tryDeleteLine;
     }
@@ -129,13 +135,27 @@ public class MyPlayerController : MonoBehaviour
     }
 
     public void tryChain(InputAction.CallbackContext ctx) {
-        if (ctx.action.actionMap.name == "XRI RightHand" && highlighted_vertex)
+        if (ctx.action.actionMap.name == "XRI RightHand" && highlighted_vertex && highlighted_vertex.GetComponent<MyVertex>().onModel == false)
         {
             chain.Add(highlighted_vertex);
             highlighted_vertex.GetComponent<MyVertex>().selected = true;
             highlighted_vertex.GetComponent<MeshRenderer>().material = selected_v;
             UnityEngine.Debug.Log("Added Vertex: " + highlighted_vertex.transform.position);
         }
+    }
+
+    public void tryCurve(InputAction.CallbackContext ctx)
+    {
+        if (ctx.action.actionMap.name == "XRI RightHand" && highlighted_vertex && highlighted_vertex.GetComponent<MyVertex>().onModel != false)
+        {
+            curve.Add(highlighted_vertex);
+            highlighted_vertex.GetComponent<MyVertex>().selected = true;
+            highlighted_vertex.GetComponent<MyVertex>().curved = true;
+            highlighted_vertex.GetComponent<MeshRenderer>().material = selected_v;
+            UnityEngine.Debug.Log("Added Vertex: " + highlighted_vertex.transform.position);
+            curved = true;
+        }
+
     }
 
     public void tryDeleteLine(InputAction.CallbackContext ctx)
@@ -163,7 +183,7 @@ public class MyPlayerController : MonoBehaviour
         // UnityEngine.Debug.Log("Model Vertex " + highlighted_vertex.GetComponent<MyVertex>().onModel);
         if (ctx.action.actionMap.name == "XRI RightHand" && highlighted_vertex && highlighted_vertex.GetComponent<MyVertex>().onModel == false)
         {
-            UnityEngine.Debug.Log("I WILL FINISH WHAT YOU STARTEDDDDDDDDDDDDDDDDDDDDDD");
+            //UnityEngine.Debug.Log("I WILL FINISH WHAT YOU STARTEDDDDDDDDDDDDDDDDDDDDDD");
             /*foreach (WallManager wall in walls)
             {
                 WallManager parent_wall = active_v.GetComponent<MyVertex>().GetWallManager();
@@ -172,6 +192,7 @@ public class MyPlayerController : MonoBehaviour
                 UnityEngine.Debug.Log("STOP THE COUNT FOR REAL" + parent_wall.rendered_vertices.Count);
             }*/
             //Model3D parent_model = active_v.GetComponent<MyVertex>().GetModel();
+            //AL.RemoveVertex(highlighted_vertex.GetComponent<MyVertex>().key);
             Destroy(highlighted_vertex);
             /*Trying to delete all lines attached to verticies*/
             /*for (int i = 0; i < highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Count; i++)
@@ -179,14 +200,7 @@ public class MyPlayerController : MonoBehaviour
                 Destroy(highlighted_vertex.GetComponent<MyVertex>().list_of_lines[i]);
             }*/
         }
-        //UnityEngine.Debug.Log("Testing Button");
-        /*for(int point = 0; point<selected_line.positionCount; point++)
-        {
-            if(CotnrollerRight.transform.position == selected_line.GetPosition(point))
-            {
-                destroy(selected_line);
-            }
-        }*/
+
     }
 
     private void trySelect(InputAction.CallbackContext ctx) {
@@ -194,65 +208,119 @@ public class MyPlayerController : MonoBehaviour
         //start the line
         if (ctx.action.actionMap.name == "XRI RightHand" && highlighted_vertex)
         {
-            //create the line start
-            active_line = new GameObject("line");
-            active_line.transform.parent = highlighted_vertex.transform;
-            active_v = highlighted_vertex;
-            active_line.transform.localPosition = Vector3.zero;
+            if (highlighted_vertex.GetComponent<MyVertex>().curved == true)
+            {
+                UnityEngine.Debug.Log("I WILL FINISH WHAT YOU STARTEDDDDDDDDDDDDDDDDDDDDDD" + curve.Count);
+                foreach (GameObject obj in curve)
+                {
+                    active_line = new GameObject("line");
+                    active_line.transform.parent = obj.transform;
+                    active_v = obj;
+                    active_line.transform.localPosition = Vector3.zero;
 
-            s_line = new GameObject("s_line");
-            s_line.transform.parent = highlighted_vertex.transform;
-            s_line.transform.localPosition = Vector3.zero;
-            
-            lr = active_line.AddComponent<LineRenderer>();
-            lrs = s_line.AddComponent<LineRenderer>();
+                    s_line = new GameObject("s_line");
+                    s_line.transform.parent = obj.transform;
+                    s_line.transform.localPosition = Vector3.zero;
 
-            if (highlighted_vertex.GetComponent<MyVertex>().GetModel() != null) {
-                lr.material = projection_line;
-                lr.startWidth = .01f;
-                lr.endWidth = .01f;
-                lrs.material = projection_line_p;
-                lrs.startWidth = .01f;
-                lrs.endWidth = .01f;
-                fromModel = true;
+                    lr = active_line.AddComponent<LineRenderer>();
+                    lrs = s_line.AddComponent<LineRenderer>();
 
+                    if (obj.GetComponent<MyVertex>().GetModel() != null)
+                    {
+                        lr.material = projection_line;
+                        lr.startWidth = .01f;
+                        lr.endWidth = .01f;
+                        lrs.material = projection_line_p;
+                        lrs.startWidth = .01f;
+                        lrs.endWidth = .01f;
+                        fromModel = true;
+                        start_key = obj.GetComponent<MyVertex>().key;
+
+
+                    }
+
+                    Vector3[] positions = new Vector3[2];
+                    lineStart = active_line.transform.position;
+                    positions[0] = lineStart;
+                    positions[1] = obj.transform.position;
+                    lr.positionCount = positions.Length;
+                    lr.SetPositions(positions);
+
+                    Vector3[] positions2 = new Vector3[2];
+                    lineStart = active_line.transform.position;
+                    positions2[0] = lineStart;
+                    positions2[1] = Snap(obj.transform.position, lineStart);
+                    lrs.positionCount = positions2.Length;
+                    lrs.SetPositions(positions2);
+                    selecting = true;
+                }
             }
-            else if (highlighted_vertex.GetComponent<MyVertex>().GetWallManager() != null) {
-                lr.material = wall_line;
-                lr.startWidth = .01f;
-                lr.endWidth = .01f;
-                lrs.material = wall_line_p; 
-                lrs.startWidth = .0f;
-                lrs.endWidth = .0f;
-                fromModel = false;
-                
+            else
+            {
+                //create the line start
+                active_line = new GameObject("line");
+                active_line.transform.parent = highlighted_vertex.transform;
+                active_v = highlighted_vertex;
+                active_line.transform.localPosition = Vector3.zero;
+
+                s_line = new GameObject("s_line");
+                s_line.transform.parent = highlighted_vertex.transform;
+                s_line.transform.localPosition = Vector3.zero;
+
+                lr = active_line.AddComponent<LineRenderer>();
+                lrs = s_line.AddComponent<LineRenderer>();
+
+                if (highlighted_vertex.GetComponent<MyVertex>().GetModel() != null)
+                {
+                    lr.material = projection_line;
+                    lr.startWidth = .01f;
+                    lr.endWidth = .01f;
+                    lrs.material = projection_line_p;
+                    lrs.startWidth = .01f;
+                    lrs.endWidth = .01f;
+                    fromModel = true;
+                    start_key = highlighted_vertex.GetComponent<MyVertex>().key;
+
+
+                }
+                else if (highlighted_vertex.GetComponent<MyVertex>().GetWallManager() != null)
+                {
+                    lr.material = wall_line;
+                    lr.startWidth = .01f;
+                    lr.endWidth = .01f;
+                    lrs.material = wall_line_p;
+                    lrs.startWidth = .0f;
+                    lrs.endWidth = .0f;
+                    fromModel = false;
+
+                }
+                else
+                {
+                    lr.material = default_line;
+                    lr.startWidth = .01f;
+                    lr.endWidth = .01f;
+                    lrs.material = default_line;
+                    lrs.startWidth = .01f;
+                    lrs.endWidth = .01f;
+                    fromModel = false;
+
+                }
+
+                Vector3[] positions = new Vector3[2];
+                lineStart = active_line.transform.position;
+                positions[0] = lineStart;
+                positions[1] = ControllerRight.transform.position;
+                lr.positionCount = positions.Length;
+                lr.SetPositions(positions);
+
+                Vector3[] positions2 = new Vector3[2];
+                lineStart = active_line.transform.position;
+                positions2[0] = lineStart;
+                positions2[1] = Snap(ControllerRight.transform.position, lineStart);
+                lrs.positionCount = positions2.Length;
+                lrs.SetPositions(positions2);
+                selecting = true;
             }
-            else {
-                lr.material = default_line;
-                lr.startWidth = .01f;
-                lr.endWidth = .01f;   
-                lrs.material = default_line;
-                lrs.startWidth = .01f;
-                lrs.endWidth = .01f;
-                fromModel = false;
-                
-            }
-
-            Vector3[] positions = new Vector3[2];
-            lineStart = active_line.transform.position;
-            positions[0] = lineStart;
-            positions[1] = ControllerRight.transform.position;
-            lr.positionCount = positions.Length;
-            lr.SetPositions(positions);
-
-            Vector3[] positions2 = new Vector3[2];
-            lineStart = active_line.transform.position;
-            positions2[0] = lineStart;
-            positions2[1] = Snap(ControllerRight.transform.position, lineStart);
-            lrs.positionCount = positions2.Length;
-            lrs.SetPositions(positions2);
-            selecting = true;
-
         }
 
     }
@@ -286,141 +354,128 @@ public class MyPlayerController : MonoBehaviour
         UnityEngine.Debug.Log("Trying to release");
         if (ctx.action.actionMap.name == "XRI RightHand" && selecting)
         {
-            bool line_attached = false;
-            //end the line
-            foreach (WallManager wall in walls)
+            if (!curved)
             {
-                if (wall.can_spawn_vertex) {
-                    Vector3 t_pos;
-                    Vector3 t_pos1;
-                    LineManager LM = active_line.AddComponent<LineManager>();
-                    //AdjacencyList<int> AL;
-                    //AL = list.AddComponent<AdjacencyList<int>>();
-
-                    Vector3[] positions = new Vector3[2];
-                    positions[0] = lineStart;
-
-                    WallManager parent_wall = active_v.GetComponent<MyVertex>().GetWallManager();
-                    parent_wall = wall.GetComponent<WallManager>();
-                    UnityEngine.Debug.Log("STOP THE COUNT" + parent_wall.rendered_vertices.Count);
-                   
-                    /*for (int i = 0; i < parent_wall.rendered_vertices.Count; i++)
+                bool line_attached = false;
+                //end the line
+                foreach (WallManager wall in walls)
+                {
+                    if (wall.can_spawn_vertex)
                     {
-                        UnityEngine.Debug.Log("Congrats you played yourself" + parent_wall.rendered_vertices[i].transform.position);
-                        if (parent_wall.rendered_vertices[i].transform.position == lineStart)
+                        Vector3 t_pos;
+                        Vector3 t_pos1;
+                        LineManager LM = active_line.AddComponent<LineManager>();
+                        //AdjacencyList<int> AL;
+                        //AL = list.AddComponent<AdjacencyList<int>>();
+
+                        Vector3[] positions = new Vector3[2];
+                        positions[0] = lineStart;
+
+                        WallManager parent_wall = active_v.GetComponent<MyVertex>().GetWallManager();
+                        parent_wall = wall.GetComponent<WallManager>();
+                        UnityEngine.Debug.Log("STOP THE COUNT" + parent_wall.rendered_vertices.Count);
+
+
+                        // && StartVert.GetComponent<MyVertex>().snappedVertex == true && highlighted_vertex.GetComponent<MyVertex>().freeRange == false
+
+                        //need a check to see if it a line on the wall.
+                        if (highlighted_vertex)
                         {
-                            UnityEngine.Debug.Log("REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-                            StartVert = parent_wall.rendered_vertices[i];
+                            t_pos = highlighted_vertex.transform.position;
+                            positions[1] = t_pos;
+                            //Only working for lines not originating from model, and if delete from origin vertex, then vertex at end of line cannot be deleted
+                            //highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Add(LM);
+                            UnityEngine.Debug.Log("first snap");
+                            //highlighted_vertex.AddComponent<AdjacencyList<int>>();
+                            end_key = highlighted_vertex.GetComponent<MyVertex>().key;
+                            //AL.AddEdge(start_key, end_key);
+                            //if vertex already exists
+                            //UnityEngine.Debug.Log("highlight Vertex Key" + highlighted_vertex.GetComponent<MyVertex>().key);
+                            //AL.AddEdge(StartVert.GetComponent<MyVertex>().key, highlighted_vertex.GetComponent<MyVertex>().key);
+                            //Add vertex key to 
+
                         }
-                    }*/
-                    //UnityEngine.Debug.Log("Start Vertex Key" + StartVert.GetComponent<MyVertex>().key);
-                    //check highlighted vertex and if vertex at pos[0], snapped_vertex is set to false
-                    //StartVert.GetComponent<MyVertex>().snappedVertex == true
-                    // && StartVert.GetComponent<MyVertex>().snappedVertex == true && highlighted_vertex.GetComponent<MyVertex>().freeRange == false
-
-                    //need a check to see if it a line on the wall.
-                    if (highlighted_vertex)
-                    {
-                        t_pos = highlighted_vertex.transform.position;
-                        positions[1] = t_pos;
-                        //Only working for lines not originating from model, and if delete from origin vertex, then vertex at end of line cannot be deleted
-                        //highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Add(LM);
-                        UnityEngine.Debug.Log("first snap");
-                        //if vertex already exists
-                        //UnityEngine.Debug.Log("highlight Vertex Key" + highlighted_vertex.GetComponent<MyVertex>().key);
-                        //AL.AddEdge(StartVert.GetComponent<MyVertex>().key, highlighted_vertex.GetComponent<MyVertex>().key);
-                        //Add vertex key to 
-
-                    }
-                    else if (fromModel)
-                    {
-                        //only do this if line is originating from wall
-                        t_pos = Snap(wall.spawn_point, lineStart);
-                        positions[1] = wall.makeV(t_pos, LM, true, false, ref dest_key);
-                        UnityEngine.Debug.Log("second snap");
-                        //line is from a vertex that was generated via a line from the model
-                        /*if (fromModel == true)
+                        else if (fromModel)
                         {
-                            
-/
+                            //only do this if line is originating from wall
                             t_pos = Snap(wall.spawn_point, lineStart);
                             positions[1] = wall.makeV(t_pos, LM, true, false, ref dest_key);
+                            /*highlighted_vertex.AddComponent<AdjacencyList<int>>();
+                            AL.AddVertex(highlighted_vertex.GetComponent<MyVertex>().key);
+                            AL.AddEdge(start_key, highlighted_vertex.GetComponent<MyVertex>().key);*/
                             UnityEngine.Debug.Log("second snap");
-                            //UnityEngine.Debug.Log("dest Vertex Key" + dest_key);
-                            //snapped_vertex = true
+
+                            //Attaching line to vertex at the end of the line
+                            //highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Add(LM);
+                            //positions[1] = wall.makeV(t_pos1);*/
+                            fromModel = false;
                         }
                         else
                         {
-                            t_pos = rightControllerReference.transform.position;
-                            if (highlighted_vertex)
-                            {
-                                positions[1] = highlighted_vertex.transform.position;
-                            }
-                            else
-                            {
-                                positions[1] = wall.makeV(t_pos, LM, false, true, ref dest_key);
-                                UnityEngine.Debug.Log("dest Vertex Key" + dest_key);
-                            }
-                           
-                            //snapped_vertex = false
+                            line_attached = false;
+                            break;
                         }
-                        fromModel = false;
-                        //Attaching line to vertex at the end of the line
-                        //highlighted_vertex.GetComponent<MyVertex>().list_of_lines.Add(LM);
-                        //positions[1] = wall.makeV(t_pos1);*/
-                        fromModel = false;
-                    }
-                    else
-                    {
-                        line_attached = false; 
+                        //positions[1] = wall.makeV(t_pos, LM, false);
+                        /*if(fromModel == false)
+                        {
+                            t_pos = rightControllerReference.transform.position;
+                        }
+                        else
+                        {
+                            t_pos = Snap(wall.spawn_point, lineStart);
+                        }*/
+                        Model3D parent_model = active_v.GetComponent<MyVertex>().GetModel();
+                        if (parent_model)
+                        {
+                            lr.tag = "p_line";
+                        }
+                        else if (parent_wall)
+                        {
+                            lr.tag = "w_line";
+                        }
+                        lr.positionCount = positions.Length;
+                        lr.SetPositions(positions);
+                        if (highlighted_vertex)
+                        {
+                            if (dotted && highlighted_vertex.GetComponent<MyVertex>().GetWallManager() != null)
+                            {
+                                UnityEngine.Debug.Log("Drawing Dotted");
+                                lr.material = dotted_line;
+                                lr.textureMode = LineTextureMode.Tile;
+                                float width = lr.startWidth;
+                                lr.material.SetTextureScale("_MainTex", new Vector2(0.5f / width, 1.0f));
+                            }
+                        }
+                        if (active_line)
+                        {
+                            LM.controller = controller;
+                            LM.threshold = threshold;
+                            LM.rightControllerReference = rightControllerReference;
+                            UnityEngine.Debug.Log("right controller ref" + rightControllerReference + "confirmed");
+
+
+                            line_attached = true;
+                        }
+                        freeze = true;
                         break;
                     }
-                    //positions[1] = wall.makeV(t_pos, LM, false);
-                    /*if(fromModel == false)
-                    {
-                        t_pos = rightControllerReference.transform.position;
-                    }
-                    else
-                    {
-                        t_pos = Snap(wall.spawn_point, lineStart);
-                    }*/
-                    Model3D parent_model = active_v.GetComponent<MyVertex>().GetModel();
-                    if(parent_model)
-                    {
-                        lr.tag = "p_line";
-                    }
-                    else if (parent_wall) {
-                        lr.tag = "w_line";
-                    }
-                    lr.positionCount = positions.Length;
-                    lr.SetPositions(positions);
-                    if(highlighted_vertex) {
-                        if (dotted && highlighted_vertex.GetComponent<MyVertex>().GetWallManager() != null)
-                        {
-                            UnityEngine.Debug.Log("Drawing Dotted");
-                            lr.material = dotted_line;
-                            lr.textureMode = LineTextureMode.Tile;
-                            float width =  lr.startWidth;
-                            lr.material.SetTextureScale("_MainTex", new Vector2(0.5f/width, 1.0f));
-                        }
-                    }
-                    if (active_line) {
-                        LM.controller = controller;
-                        LM.threshold = threshold;
-                        LM.rightControllerReference = rightControllerReference;
-                        UnityEngine.Debug.Log("right controller ref" + rightControllerReference + "confirmed");
-
-
-                        line_attached = true;
-                    }
-                    freeze = true;
-                    break;
+                    //break;
+                }
+                Destroy(s_line);
+                if (!line_attached)
+                    Destroy(active_line);
+                selecting = false;
+            }
+            else
+            {
+                DrawCurved();
+                curved= false;
+                foreach (GameObject item in curve)
+                {
+                    item.GetComponent<MyVertex>().selected = false;
+                    item.GetComponent<MyVertex>().highlightOff();
                 }
             }
-            Destroy(s_line);
-            if (!line_attached)
-                Destroy(active_line);
-            selecting = false;
         }
     }
 
@@ -638,21 +693,71 @@ public class MyPlayerController : MonoBehaviour
 
 
     public void DrawCurved() {
-        if (chain.Count == 1)
+        if (curve.Count == 1)
             return;
-        for(int i = 0; i < chain.Count; i++)
+        foreach (GameObject item in curve)
         {
-            if (i == chain.Count - 1)
+            foreach (WallManager wall in walls)
             {
+                bool line_attached = false;
+                if (wall.can_spawn_vertex)
+                {
+                    Vector3[] pos = new Vector3[2];
+                    pos[0] = item.transform.position;
+                    Vector3 t_pos;
+                    Vector3 t_pos1;
+                    DrawnLines LM = active_line.AddComponent<DrawnLines>();
+                    LineManager LN = active_line.AddComponent<LineManager>();
+                    //AdjacencyList<int> AL;
+                    //AL = list.AddComponent<AdjacencyList<int>>();
+
+                    Vector3[] positions = new Vector3[2];
+                    positions[0] = lineStart;
+
+                    WallManager parent_wall = active_v.GetComponent<MyVertex>().GetWallManager();
+                    parent_wall = wall.GetComponent<WallManager>();
+                    UnityEngine.Debug.Log("STOP THE COUNT" + parent_wall.rendered_vertices.Count);
+
+
+                    // && StartVert.GetComponent<MyVertex>().snappedVertex == true && highlighted_vertex.GetComponent<MyVertex>().freeRange == false
+                    t_pos = Snap(wall.spawn_point, item.transform.position);
+                    pos[1] = t_pos;
+                    positions[1] = wall.makeV(t_pos, LN, true, false, ref dest_key);
+
+                    LineRenderer lr;
+                    //DrawnLines LM;
+                    GameObject go = new GameObject("LR holder");
+                    lr = go.gameObject.AddComponent<LineRenderer>();
+                    LM = go.gameObject.AddComponent<DrawnLines>();
+                    LM.controller = controller;
+                    LM.threshold = threshold;
+                    LM.rightControllerReference = rightControllerReference;
+                    Vector3 direction = pos[1] - pos[0];
+                    float distance = pos[0].magnitude;
+                    LM.end_fromDraw = pos[0];
+                    LM.origin_fromDraw = pos[1];
+                    LM.direction_fromDraw = direction;
+                    LM.distance_fromDraw = distance;
+                    lr.material = projection_line;
+                    lr.startWidth = .01f;
+                    lr.endWidth = .01f;
+                    lr.material = dotted ? dotted_line : projection_line;
+                    go.tag = "p_line";
+                    lr.positionCount = pos.Length;
+                    lr.SetPositions(pos);
+                    Destroy(s_line);
+                    Destroy(active_line);
+
+                }
 
             }
         }
-        foreach (GameObject item in chain)
+        foreach (GameObject item in curve)
         {
             item.GetComponent<MyVertex>().selected = false;
             item.GetComponent<MyVertex>().highlightOff();
         }
-        chain = new List<GameObject>();
+        curve = new List<GameObject>();
     }
 
     public void Clear() {
