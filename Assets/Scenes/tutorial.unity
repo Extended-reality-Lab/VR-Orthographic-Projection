@@ -256,6 +256,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelLoader: {fileID: 0}
+  sim_cam1: {fileID: 0}
+  sim_cam2: {fileID: 0}
+  sim_cam3: {fileID: 0}
+  scene: 0
 --- !u!114 &9493112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2719,7 +2723,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9493111}
         m_TargetAssemblyTypeName: SceneSwitcher, Assembly-CSharp
-        m_MethodName: backToMenu
+        m_MethodName: backToMenusimple
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
